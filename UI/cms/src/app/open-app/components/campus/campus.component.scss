@@ -1,0 +1,276 @@
+/* Inherits layout container styling from global app-layout */
+
+/* Layout container */
+.app-layout {
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 75px);
+  margin-top: 58px;
+  overflow: hidden;
+  background-color: #f4f6f9;
+}
+
+/* Notice Board Sidebar Styling (~18-20% width) */
+.notice-sidebar {
+  flex: 0 0 22%;
+  max-width: 250px;
+  min-width: 220px;
+  height: 100%;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header Section (Zero wasted top space) */
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.3px;
+}
+
+/* Scrollable Container for Notices */
+.notice-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Custom Scrollbar for Notices */
+.notice-container::-webkit-scrollbar {
+  width: 5px;
+}
+.notice-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.notice-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+
+/* Main content styling matching home theme */
+.main-content {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f8fafc;
+  position: relative;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-header-section h2 {
+  margin: 0 0 4px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.page-header-section p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.campus-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columns instead of 2 */
+  gap: 20px;
+  width: 100%;
+}
+
+/* Modern Campus Card Design */
+.campus-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.campus-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+}
+
+/* Image Wrapper with Floating City Badge */
+.campus-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background-color: #e2e8f0;
+  overflow: hidden;
+}
+
+.campus-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.campus-card:hover .campus-img-wrapper img {
+  transform: scale(1.04);
+}
+
+.city-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Bottom Half Info Styling */
+.campus-info {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.campus-name {
+  margin: 0 0 6px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.campus-address {
+  margin: 0;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.campus-footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.campus-year {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.explore-link {
+  color: #3b82f6;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+}
+
+.campus-card:hover .explore-link {
+  gap: 8px;
+}
+
+/* Modern Pagination Bar Styling */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+.page-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 6px;
+}
+
+.page-number-btn {
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-number-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.page-number-btn.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}

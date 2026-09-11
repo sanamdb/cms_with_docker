@@ -1,0 +1,128 @@
+.dashboard-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.dashboard-title {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* --- Top Row: 4 Metric Cards --- */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  mat-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 0 16px;
+  }
+}
+
+/* Icon Background Colors */
+.metric-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  width: 48px;
+  height: 48px;
+
+  mat-icon {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+  }
+
+  &.bg-blue { background-color: #3182ce; }
+  &.bg-green { background-color: #38a169; }
+  &.bg-orange { background-color: #dd6b20; }
+  &.bg-purple { background-color: #805ad5; }
+}
+
+/* --- Bottom Row: Data Details --- */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 24px;
+}
+
+.detail-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  mat-card-header {
+    padding-bottom: 16px;
+  }
+
+  mat-card-content {
+    padding-top: 16px;
+  }
+}
+
+/* Custom Table/List Look */
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf2f7;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.header {
+    font-weight: 600;
+    color: #a0aec0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  span {
+    flex: 1;
+    font-size: 0.95rem;
+    color: #4a5568;
+    
+    &.bold {
+      font-weight: 500;
+      color: #2d3748;
+    }
+  }
+
+  .badge {
+    flex: 0;
+    white-space: nowrap;
+    background-color: #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+}

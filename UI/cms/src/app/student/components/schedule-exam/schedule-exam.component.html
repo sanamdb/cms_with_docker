@@ -1,0 +1,130 @@
+<div class="schedule-exam-container">
+  
+  <!-- Header Section -->
+  <div class="content-header mb-4">
+    <h2>My Examinations & Schedules</h2>
+    <p class="text-muted">Track your applied course examinations, active testing windows, and published results.</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="exam.length === 0" class="card-box text-center py-5">
+    <i class="bi bi-journal-x display-4 text-muted mb-3"></i>
+    <p class="text-muted mb-0">No examination schedules found.</p>
+  </div>
+
+  <!-- Examinations Grid -->
+  <div class="exam-grid" *ngIf="exam.length > 0">
+    <div class="exam-card" *ngFor="let item of exam">
+
+      <!-- CASE 1, 2, & 3: Exam is Scheduled/Created -->
+      <ng-container *ngIf="item.exam; else onlyAppliedCase">
+        
+        <!-- Card Header: Title & Status Badge -->
+        <div class="exam-card-header">
+          <div class="exam-info">
+            <span class="batch-badge">Batch {{ item.exam.batch }}</span>
+            <h3 class="exam-title">{{ item.exam.examName }}</h3>
+          </div>
+          
+          <!-- Dynamic Status Badge Render -->
+          <div>
+            <span *ngIf="item.result" class="status-badge success">Result Announced</span>
+            <span *ngIf="!item.result && item.submission" class="status-badge pending">Under Evaluation</span>
+            <span *ngIf="!item.result && !item.submission" class="status-badge active">Upcoming / Active</span>
+          </div>
+        </div>
+
+        <!-- Card Body -->
+        <div class="exam-card-body">
+          <p class="exam-desc text-muted" *ngIf="item.exam.description">
+            {{ item.exam.description }}
+          </p>
+
+          <!-- Timeline Metadata Box -->
+          <div class="exam-metadata">
+            <div class="meta-item">
+              <span class="meta-label">Start Time</span>
+              <span class="meta-value"><i class="bi bi-calendar-event me-1"></i> {{ item.exam.startDateTime | date:'medium' }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">End Time</span>
+              <span class="meta-value"><i class="bi bi-calendar-check me-1"></i> {{ item.exam.endDateTime | date:'medium' }}</span>
+            </div>
+          </div>
+
+          <!-- SUB-CASE A: Result Announced -->
+          <div class="result-box mt-3" *ngIf="item.result">
+            <div class="result-stats">
+              <div class="stat">
+                <span class="label">Total Marks</span>
+                <span class="value">{{ item.result.totalMarks }}</span>
+              </div>
+              <div class="stat">
+                <span class="label">Obtained Marks</span>
+                <span class="value text-success">{{ item.result.obtainedMarks }}</span>
+              </div>
+              <div class="stat">
+                <span class="label">Performance</span>
+                <span class="value text-primary">
+                  {{ (item.result.obtainedMarks / item.result.totalMarks) | percent: '1.0-2'}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-CASE B: Exam Taken / Submitted but No Result Yet -->
+          <div class="info-alert mt-3" *ngIf="!item.result && item.submission">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            <span>Exam submitted successfully on <strong>{{ item.submission.submissionDateTime | date:'medium' }}</strong>. Evaluation is in progress. Result coming soon!</span>
+          </div>
+
+          <!-- SUB-CASE C: Exam Created but Not Submitted (Time Window Check) -->
+          <div class="action-footer mt-4" *ngIf="!item.result && !item.submission">
+            <!-- <button 
+              class="btn w-100" 
+              [ngClass]="isExamActive(item.exam.startDateTime, item.exam.endDateTime) ? 'btn-success' : 'btn-secondary'"
+              [disabled]="!isExamActive(item.exam.startDateTime, item.exam.endDateTime)"
+              (click)="startExam(item.exam.id)">
+              <i class="bi bi-play-circle me-1"></i> 
+              {{ getExamButtonText(item.exam.startDateTime, item.exam.endDateTime) }}
+            </button> -->
+
+            <!-- Temporary for testing -->
+             <button 
+              class="btn w-100" 
+              [ngClass]="isExamActive(item.exam.startDateTime, item.exam.endDateTime) ? 'btn-success' : 'btn-secondary'"
+              [disabled]="false"
+              (click)="startExam(item.exam.id)">
+              <i class="bi bi-play-circle me-1"></i> 
+              {{ getExamButtonText(item.exam.startDateTime, item.exam.endDateTime) }}
+            </button>
+          </div>
+
+        </div>
+      </ng-container>
+
+      <!-- CASE 4: Only Applied (Exam is null) -->
+      <ng-template #onlyAppliedCase>
+        <div class="exam-card-header">
+          <div class="exam-info">
+            <span class="batch-badge">Application Status</span>
+            <h3 class="exam-title">Admission Form Submitted</h3>
+          </div>
+          <span class="status-badge neutral">Pending Schedule</span>
+        </div>
+
+        <div class="exam-card-body">
+          <p class="text-muted mb-3">
+            Your application has been received successfully. The administration team will review your details and announce the exam schedule soon.
+          </p>
+          <div class="info-alert neutral">
+            <i class="bi bi-info-circle-fill text-info me-2"></i>
+            <span>Please check back later or wait for notification updates regarding your exam timetable.</span>
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,356 @@
+--Get all tables name
+select * from all_tables;
+
+--Get all columns name
+select * from all_tab_columns;
+
+--Get all current user object (table, view, proc, func & trigger etc)
+select * from user_objects;
+
+-- Create Tables 
+	-- basic table structure 
+	CREATE TABLE BOOK (
+	ID NUMBER,
+	NAME VARCHAR2(40),
+	PAGE NUMBER,
+	PRICE DECIMAL(7,2),
+	AUTHOR VARCHAR2(40)
+	);
+
+	-- With NOT NULL
+	CREATE TABLE BOOK (
+	ID NUMBER NOT NULL,
+	NAME VARCHAR2(40) NOT NULL,
+	PAGE NUMBER NOT NULL,
+	PRICE DECIMAL(7,2) NOT NULL,
+	AUTHOR VARCHAR2(40) NOT NULL,
+	RATING NUMBER
+	);
+
+	-- With DEFAULT Value
+	CREATE TABLE BOOK (
+	ID NUMBER NOT NULL,
+	NAME VARCHAR2(40) NOT NULL,
+	PAGE NUMBER NOT NULL,
+	PRICE DECIMAL(7,2) DEFAULT 1,
+	AUTHOR VARCHAR2(40) NOT NULL,
+	RATING NUMBER
+	);
+
+	-- With PRIMARY KEY
+	CREATE TABLE BOOK (
+	ID NUMBER PRIMARY KEY,
+	NAME VARCHAR2(40) NOT NULL,
+	PAGE NUMBER NOT NULL,
+	PRICE DECIMAL(7,2) DEFAULT 1,
+	AUTHOR VARCHAR2(40) NOT NULL,
+	RATING NUMBER
+	);
+
+	-- With AUTO INCREMENT
+	CREATE TABLE BOOK (
+	ID NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1,
+	NAME VARCHAR2(40) NOT NULL,
+	PAGE NUMBER NOT NULL,
+	PRICE DECIMAL(7,2) DEFAULT 1,
+	AUTHOR VARCHAR2(40) NOT NULL,
+	RATING DECIMAL(2,1),
+	PRIMARY KEY(ID)
+	);
+
+-- Describe Table 
+DESCRIBE BOOK;
+DESC BOOK;
+
+-- Insert Data Into Table
+   -- Single Record
+   INSERT INTO BOOK(NAME, PAGE, AUTHOR, RATING) VALUES ('Way to be nice person', 167, 'RAMESH', 4.5);
+   -- Multiple Records
+   INSERT ALL 
+	INTO BOOK (NAME, PAGE, PRICE, AUTHOR, RATING) VALUES ('How to pass Exam', 56, 342, 'VEENA S', 3.6)INTO BOOK (NAME, PAGE, PRICE, AUTHOR, RATING) VALUES ('How to be programmer', 45, 212, 'DEEPTI', 2.3) SELECT * FROM dual;
+
+-- Read (Select)
+	-- All (*)
+	SELECT * FROM BOOK;
+	-- Selected Columns
+	SELECT NAME, PRICE FROM BOOK;
+	-- With Alias 
+	SELECT NAME AS BOOK_NAME, PRICE FROM BOOK;
+	-- With Where Clause
+	SELECT * FROM BOOK WHERE PAGE>400;
+	SELECT * FROM BOOK WHERE AUTHOR='ALEX CHEN';
+
+-- Update Record 
+UPDATE BOOK SET PRICE=675;
+UPDATE BOOK SET PRICE=675 WHERE ID >8;
+
+-- 11. Delete 
+    -- Single Record 
+	DELETE FROM BOOK WHERE ID=3;
+    -- All Record
+	DELETE FROM BOOK;
+
+-- 12. CONCAT
+	-- Concat multiple string
+	SELECT CONCAT('Hello', 'World') FROM DUAL;
+	SELECT CONCAT('PRICE OF BOOK IS: ', PRICE) FROM BOOK;
+	SELECT CONCAT(NAME, PRICE) FROM BOOK;
+	-- Concat ws
+	SELECT CONCAT_WS('-', 'Hello', 'World') FROM DUAL;
+	SELECT CONCAT_WS('-', NAME, PRICE) FROM BOOK;
+
+-- 13. SUBSTRING (SUBSTR FOR ORACLE)
+	-- With 3 parameters 
+	SELECT SUBSTR('Hello World', 2, 7) FROM DUAL;
+	SELECT SUBSTR(NAME, 3, 9) FROM BOOK;
+	-- With 2 parameters
+	SELECT SUBSTR('Hello World', 3) FROM BOOK;
+	SELECT SUBSTR(NAME, 4) FROM BOOK;
+	SELECT SUBSTR(NAME, 4), SUBSTR(AUTHOR, 2) FROM BOOK;
+	-- With Negative parameters
+	SELECT SUBSTR('Hello Wolrd', -3) FROM DUAL;
+	SELECT SUBSTR(NAME, -2) FROM BOOK;
+	-- Concat with Substr
+	SELECT CONCAT(SUBSTR(NAME, 4), SUBSTR(AUTHOR, 3)) FROM BOOK;
+	
+-- 14. REPLACE
+	-- Replace 
+	SELECT REPLACE('HELLO', 'LLO', 'Y') FROM DUAL;
+	SELECT NAME, REPLACE(NAME, 'e', 'I') FROM BOOK;
+	-- Replace with Substr
+	SELECT REPLACE(NAME, SUBSTR(NAME, 2, 5), 'Hey') FROM BOOK;
+	
+-- 15. Reverse
+	SELECT REVERSE('HELLO') FROM DUAL;
+	SELECT REVERSE(NAME) FROM BOOK;
+	
+-- 16. Char Length
+	SELECT LENGTH('HELLO') FROM DUAL;
+	SELECT LENGTH(NAME) FROM BOOK;
+	
+-- 17. Upper
+	SELECT UPPER('hello') FROM DUAL;
+	SELECT UPPER(NAME) FROM BOOK;
+-- 18. Lower
+	SELECT LOWER('HELLO') FROM DUAL;
+	SELECT LOWER(AUTHOR) FROM BOOK;
+-- 19. Distinct
+	SELECT DISTINCT RATING FROM BOOK;
+	
+-- 20. Order By 
+    -- ASC 
+	SELECT * FROM BOOK ORDER BY RATING;
+    -- DESC
+	SELECT * FROM BOOK ORDER BY RATING DESC;
+	
+-- 21. Limit
+    -- With starting and ending position 
+	SELECT * FROM BOOK LIMIT 2,5; -- MySQL
+	SELECT * FROM BOOK OFFSET 2 ROWS FETCH NEXT 3 ROWS ONLY;
+    -- With ending position
+	SELECT * FROM BOOK LIMIT 5; --MySQL
+	SELECT * FROM BOOK FETCH FIRST 5 ROWS ONLY;	
+    -- With starting and ending position with reverse
+	SELECT * FROM BOOK OFFSET (SELECT COUNT(*) -10 FROM BOOK) ROWS FETCH NEXT 10 ROWS ONLY;
+	-- Limit with order by ase
+	SELECT * FROM BOOK ORDER BY RATING OFFSET 1 ROWS FETCH NEXT 2 ROWS ONLY;
+	-- Limit with order by desc
+	SELECT * FROM BOOK ORDER BY RATING DESC FETCH FIRST 2 ROWS ONLY;
+	SELECT * FROM BOOK ORDER BY RATING DESC OFFSET 1 ROWS FETCH NEXT 2 ROWS ONLY;
+	
+-- 22. Like
+    -- Underscore (_)
+	SELECT * FROM BOOK WHERE AUTHOR LIKE '__MESH'
+    -- Percentage (%)
+	SELECT * FROM BOOK WHERE AUTHOR LIKE '%A';
+    -- Search Character for keyword “\_”
+	SELECT * FROM BOOK WHERE AUTHOR LIKE '\__MESH';
+	
+-- 23. 23. Aggregate Functions
+    -- COUNT
+	SELECT COUNT(*) FROM BOOK;
+	SELECT COUNT(1) FROM BOOK;
+	SELECT COUNT(NAME) FROM BOOK;
+    -- MIN
+	SELECT MIN(PAGE) FROM BOOK;
+    -- MAX
+	SELECT MAX(PAGE) FROM BOOK;
+    -- SUM
+	SELECT SUM(PAGE) FROM BOOK;
+    -- AVG
+	SELECT AVG(RATING) FROM BOOK;
+
+-- 24. Group By
+    -- Group by column
+	SELECT RATING FROM BOOK GROUP BY RATING;
+    -- Group by with count
+	SELECT COUNT(*), RATING FROM BOOK GROUP BY RATING;
+    -- Group by with sum
+	SELECT SUM(PAGE), RATING FROM BOOK GROUP BY RATING;
+	
+-- 25. Logical Operator 
+    -- Not Equal 
+	SELECT * FROM BOOK WHERE RATING != 4.1;
+    -- Not Like 
+	SELECT * FROM BOOK WHERE AUTHOR NOT LIKE '%ARIS%'
+    -- Greater Than 
+	SELECT * FROM BOOK WHERE RATING > 4.3;
+    -- Less Than
+	SELECT * FROM BOOK WHERE RATING < 4.3;
+    -- Logical AND 
+	SELECT * FROM BOOK WHERE RATING > 4.3 AND PAGE > 400;
+    -- Logical OR
+	SELECT * FROM BOOK WHERE RATING > 4.3 OR PAGE > 300;
+    -- Between 
+	SELECT * FROM BOOK WHERE RATING BETWEEN 4.1 AND 4.6;
+    -- In & Not In
+	SELECT * FROM BOOK WHERE RATING IN (3.8, 4.1, 4.2);
+	SELECT * FROM BOOK WHERE RATING NOT IN (3.8, 4.1, 4.2);
+	
+-- 26. Relationship & Join
+    -- Working with foreign key 
+	CREATE TABLE CUSTOMER (
+		ID NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1,
+		NAME VARCHAR2(40),
+		ADDRESS VARCHAR2(200),
+		PRIMARY KEY (ID) 
+	);
+	CREATE TABLE PRODUCT_ORDER (
+		ID NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1,
+		PRODUCT_NAME VARCHAR2(50),
+		PRICE DECIMAL(6,2),
+		CUSTOMER_ID NUMBER,
+		PRIMARY KEY(ID),
+		FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMER(ID)
+	);
+    -- Cross Join
+	SELECT * FROM CUSTOMER, PRODUCT_ORDER;
+    -- Inner Join 
+	SELECT * FROM CUSTOMER 
+	INNER JOIN PRODUCT_ORDER
+	ON CUSTOMER.ID = PRODUCT_ORDER.CUSTOMER_ID;
+    -- Left Join 
+	SELECT * FROM CUSTOMER
+	LEFT JOIN PRODUCT_ORDER
+	ON CUSTOMER.ID = PRODUCT_ORDER.CUSTOMER_ID;
+    -- Right Join 
+	SELECT * FROM CUSTOMER
+	RIGHT JOIN PRODUCT_ORDER
+	ON CUSTOMER.ID = PRODUCT_ORDER.CUSTOMER_ID;
+	-- Many:Many
+	CREATE TABLE CUSTOMER (
+		ID NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1,
+		NAME VARCHAR2(40),
+		ADDRESS VARCHAR2(120),
+		PRIMARY KEY(ID)
+	);
+	CREATE TABLE PRODUCT (
+		ID NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1,
+		NAME VARCHAR2(160),
+		PRICE DECIMAL(7,2),
+		PRIMARY KEY(ID)
+	);
+	CREATE TABLE PRODUCT_ORDER (
+		ID NUMBER GENERATED ALWAYS AS IDENTITY START WITH 1 INCREMENT BY 1,
+		CUSTOMER_ID NUMBER,
+		PRODUCT_ID NUMBER,
+		PRIMARY KEY (ID),
+		FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMER (ID),
+		FOREIGN KEY (PRODUCT_ID) REFERENCES PRODUCT (ID)
+	);
+	
+-- 27. View
+	CREATE OR REPLACE VIEW CUSTOMER_PRODUCT_ORDER (
+		CUSTOMER_ID,
+		PRODUCT_ID,
+		CUSTOMER_NAME,
+		PRODUCT_NAME,
+		PRICE
+	)
+	AS SELECT 
+	A.ID,
+	B.ID,
+	A.NAME,
+	B.NAME,
+	B.PRICE
+	FROM CUSTOMER A, PRODUCT B, PRODUCT_ORDER C 
+	WHERE A.ID = C.CUSTOMER_ID AND B.ID = C.PRODUCT_ID;
+	
+	SELECT * FROM CUSTOMER_PRODUCT_ORDER;
+
+-- 28. Alter
+    -- add column 
+	ALTER TABLE CUSTOMER ADD PINCODE VARCHAR2(8);
+    -- modify column
+	ALTER TABLE CUSTOMER MODIFY PINCODE VARCHAR2(6);
+
+-- 29. Delete VS Truncate VS Drop
+	-- Delete
+	DELETE FROM CUSTOMER WHERE ID=1;
+	COMMIT;
+	DELETE FROM CUSTOMER;
+	ROLLBACK;
+	-- Truncate
+	TRUNCATE TABLE CUSTOMER;
+	-- Drop
+	DROP TABLE CUSTOMER;
+	
+-- 30. Rename Table
+	ALTER TABLE CUSTOMER_TEST RENAME TO CUSTOMER_TEST2;
+	
+-- 31. Union & Intersection 
+    -- Union
+	SELECT ID, NAME FROM CUSTOMER_TEST
+	UNION 
+	SELECT ID, NAME FROM CUSTOMER_TEST2;
+    -- Union All
+	SELECT ID, NAME FROM CUSTOMER_TEST
+	UNION ALL
+	SELECT ID, NAME FROM CUSTOMER_TEST2;
+    -- Intersection / Minus
+	SELECT ID, NAME FROM CUSTOMER_TEST
+	INTERSECT
+	SELECT ID, NAME FROM CUSTOMER_TEST2;
+	-- Minus
+	SELECT ID, NAME FROM CUSTOMER_TEST
+	MINUS
+	SELECT ID, NAME FROM CUSTOMER_TEST2;
+
+-- 32. Keys & Type of keys
+    -- Super key:- Maximum number of attribute that can uniquely identify the record. 	
+    -- Candidate key:- Minimum number of attribute that can uniquely identify the record.
+    -- Primary key:- From candidate key one or more than than one attribute selected as primary key.
+    -- Alternate key:- The candate key which didn't choosen for primary key are called alternate key
+    -- Surrogate key:- Not real data but generated attribute called surrogate key.
+    -- Composite key:- >1 attribute as key called composite key
+    -- Foreign key:- Primary key of a table references in another table called foreign key.
+
+-- 33. Normalization 
+
+-- 34. ACID
+    -- Atomicity:- Either all or no transaction has been comitted. 
+    -- Consistency:- Before and After transaction table must follow constraint & Consistency. 
+    -- Isolation:- Each transaction are isolated from each other. 
+    -- Durability:- On system failure transaction should be recovered from Logs
+
+-- 35. Indexing
+	-- create the index on attribute which devide the record based on index attribute which make search query faster 
+	CREATE INDEX NAME_INDEX ON CUSTOMER_TEST(NAME);
+	
+-- 36. Database Trigger
+	CREATE OR REPLACE TRIGGER CUSTOMER_TEST_TRG 
+	AFTER INSERT ON CUSTOMER_TEST
+	FOR EACH ROW
+	BEGIN 
+
+	END;
+	/  
+	
+-- 37. Case Statement 
+SELECT NAME, PRICE 
+CASE 
+WHEN PRICE > 400 THEN 'Expensive'
+WHEN PRICE > 100 THEN 'High Price'
+ELSE 'Affordable'
+END AS PRODUCT_PRICE
+FROM PRODUCT;

@@ -1,0 +1,168 @@
+<div class="profile-layout-wrapper">
+  
+  <!-- LEFT FIXED SIDEBAR -->
+  <aside class="profile-sidebar">
+    
+    <!-- User Profile Brief -->
+    <div class="sidebar-user-card">
+      <div class="avatar-wrapper">
+        <img
+          [src]="loggedInProfile?.profilePic ? 'data:image/jpeg;base64,' + loggedInProfile.profilePic : 'assets/default-avatar.png'"
+          alt="Profile Photo">
+        <span class="status-indicator"></span>
+      </div>
+      <div class="user-info">
+        <h4 class="user-name">{{ loggedInProfile?.firstName }} {{ loggedInProfile?.lastName }}</h4>
+        <span class="user-role">{{ role | titlecase}}</span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Options -->
+    <div class="sidebar-menu">
+      <span class="menu-category">Navigation</span>
+      
+      <button class="menu-item" [class.active]="activeTab === 'dashboard'" (click)="setTab('dashboard')">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Dashboard</span>
+      </button>
+
+      <!-- Restored: My Profile -->
+      <button class="menu-item" [class.active]="activeTab === 'profile'" (click)="setTab('profile')">
+        <i class="bi bi-person-fill"></i>
+        <span>My Profile</span>
+      </button>
+
+      <!-- 1. Campus Collapsible Menu -->
+      <div class="menu-dropdown-wrapper">
+        <button class="menu-item dropdown-toggle-btn" (click)="toggleCampusMenu()">
+          <div class="menu-item-left">
+            <i class="bi bi-building"></i>
+            <span>Campus</span>
+          </div>
+          <i class="bi" [ngClass]="isCampusOpen ? 'bi-dash' : 'bi-plus'"></i>
+        </button>
+
+        <div class="submenu-tree" *ngIf="isCampusOpen">
+          <div class="tree-vertical-line"></div>
+          <div class="submenu-items">
+            <button class="sub-menu-item" [class.active]="activeTab === 'campus-add'" (click)="setTab('campus-add')">
+              <span>Add Campus</span>
+            </button>
+            <button class="sub-menu-item" [class.active]="activeTab === 'campus-display'" (click)="setTab('campus-display')">
+              <span>Display Campus</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Department Collapsible Menu -->
+      <div class="menu-dropdown-wrapper">
+        <button class="menu-item dropdown-toggle-btn" (click)="toggleDepartmentMenu()">
+          <div class="menu-item-left">
+            <i class="bi bi-diagram-3"></i>
+            <span>Department</span>
+          </div>
+          <i class="bi" [ngClass]="isDepartmentOpen ? 'bi-dash' : 'bi-plus'"></i>
+        </button>
+
+        <div class="submenu-tree" *ngIf="isDepartmentOpen">
+          <div class="tree-vertical-line"></div>
+          <div class="submenu-items">
+            <button class="sub-menu-item" [class.active]="activeTab === 'dept-add'" (click)="setTab('dept-add')">
+              <span>Add Department</span>
+            </button>
+            <button class="sub-menu-item" [class.active]="activeTab === 'dept-display'" (click)="setTab('dept-display')">
+              <span>Display Department</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="menu-item" [class.active]="activeTab === 'faq'" (click)="setTab('faq')">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>FAQ</span>
+      </button>
+
+      <button class="menu-item" [class.active]="activeTab === 'professor'" (click)="setTab('professor')">
+        <i class="bi bi-gear-fill"></i>
+        <span>Add Professor</span>
+      </button>
+      
+      <button class="menu-item" [class.active]="activeTab === 'batch'" (click)="setTab('batch')">
+        <i class="bi bi-gear-fill"></i>
+        <span>Create Batch</span>
+      </button>
+
+      <button class="menu-item" [class.active]="activeTab === 'exam'" (click)="setTab('exam')">
+        <i class="bi bi-gear-fill"></i>
+        <span>Create Exam</span>
+      </button>
+
+    </div>
+
+    <!-- Sidebar Footer / Logout -->
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logoutUser()">
+        <i class="bi bi-box-arrow-left"></i>
+        <span>Sign Out</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- RIGHT DYNAMIC CONTENT AREA -->
+  <main class="profile-content-area">
+
+    <app-portal-info></app-portal-info>
+    
+    <!-- Tab: Dashboard -->
+    <div *ngIf="activeTab === 'dashboard'" class="tab-pane animate-fade-in">
+      <app-dashboard></app-dashboard>      
+    </div>
+
+    <!-- Restored: Profile Details -->
+    <div *ngIf="activeTab === 'profile'" class="tab-pane animate-fade-in">
+      <app-admin-profile></app-admin-profile>
+    </div>
+
+    <!-- Tab: Add Campus -->
+    <div *ngIf="activeTab === 'campus-add'" class="tab-pane animate-fade-in">
+      <app-add-campus></app-add-campus>
+    </div>
+
+    <!-- Tab: Display Campus -->
+    <div *ngIf="activeTab === 'campus-display'" class="tab-pane animate-fade-in">
+      <app-campus-display></app-campus-display>
+      <router-outlet></router-outlet>
+    </div>
+
+    <!-- Tab: Add Department -->
+    <div *ngIf="activeTab === 'dept-add'" class="tab-pane animate-fade-in">
+      <app-add-department (newDepartment)="addNewDepartment($event)" [isEdit]="toEdit" [department]="departmentDataToEdit"></app-add-department>
+    </div>
+
+    <!-- Tab: Display Department -->
+    <div *ngIf="activeTab === 'dept-display'" class="tab-pane animate-fade-in">
+      <app-department-display [departmentList]="departments" (isEdit)="toBeEdit($event)" (department)="departmentToEdit($event)"></app-department-display>
+    </div>
+
+    <div *ngIf="activeTab === 'faq'" class="tab-pane animate-fade-in">
+      <app-faq-admin></app-faq-admin>
+    </div>
+
+    <div *ngIf="activeTab === 'professor'" class="tab-pane animate-fade-in">
+      <app-add-professor></app-add-professor>
+    </div>
+
+
+    <!-- Tab: Settings -->
+    <div *ngIf="activeTab === 'batch'" class="tab-pane animate-fade-in">
+      <app-batch></app-batch>
+    </div>
+
+    <div *ngIf="activeTab === 'exam'" class="tab-pane animate-fade-in">
+      <app-exam></app-exam>
+    </div>
+
+  </main>
+</div>

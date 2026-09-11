@@ -1,0 +1,52 @@
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
+  <div class="container-fluid">
+    <!-- Brand / Logo -->
+    <a class="navbar-brand" routerLink="/home">
+      <img src="assets/favicon1.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Menu Content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="campus">Campus</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" routerLink="aboutUs" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About Us
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" routerLink="Career">Career</a></li>
+            <li><a class="dropdown-item" routerLink="FAQ">FAQ</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" routerLink="aboutUs">About Us</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/events" class="nav-link">Events</a>
+        </li>
+      </ul>
+
+      <!-- Right side items: Search bar + Login Button -->
+      <div class="d-flex align-items-center gap-2">
+        <form class="d-flex mb-0">
+          <input class="form-control me-2" name ="search" id="search" [(ngModel)]="search" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-success" type="button" (click)="SearchGlobally()">Search</button>
+        </form>
+
+        <!-- Login Button Routing -->
+        <a routerLink="/login" class="btn btn-outline-light text-nowrap">
+          <i class="bi bi-box-arrow-in-right me-1"></i> Login
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

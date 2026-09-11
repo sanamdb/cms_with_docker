@@ -1,0 +1,196 @@
+<div class="professor-form-container">
+
+    <form [formGroup]="professorForm" class="professor-form" (ngSubmit)="submitProfessor()">
+
+        <!-- 2-Column Layout Wrapper -->
+        <div class="form-columns">
+
+            <!-- LEFT COLUMN: Basic Details (Collapsible) -->
+            <div class="column">
+                <mat-accordion multi="true">
+                    <mat-expansion-panel expanded="true" class="professor-margin">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Professor Details</mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <!-- Basic Info Row -->
+                        <div class="form-row">
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Id</mat-label>
+                                <input matInput type="text" formControlName="id">
+                                <mat-error *ngIf="professorForm.get('id')?.hasError('required')">This is mandatory field</mat-error>
+                                <mat-error *ngIf="professorForm.get('id')?.hasError('min')">Id start with 101</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>First Name</mat-label>
+                                <input matInput type="text" formControlName="firstName">
+                                <mat-error *ngIf="professorForm.get('firstName')?.hasError('required')">This is mandatory field</mat-error>
+                                <mat-error *ngIf="professorForm.get('firstName')?.hasError('minlength')">Minimum length is 2</mat-error>
+                                <mat-error *ngIf="professorForm.get('firstName')?.hasError('maxlength')">Maximum length is 20</mat-error>
+                                <mat-error *ngIf="professorForm.get('firstName')?.hasError('nameError')">Name can not contains test/Test</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Last Name</mat-label>
+                                <input matInput type="text" formControlName="lastName">
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Email</mat-label>
+                                <input matInput type="email" formControlName="email">
+                                <mat-error *ngIf="professorForm.get('email')?.hasError('emailError')">Email must have @ symbol</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Personal Info Row -->
+                        <div class="form-row">
+                            <mat-form-field class="professor-full-width date">
+                                <mat-label>Date Of Birth</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="dob">
+                                <mat-hint>MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-error *ngIf="professorForm.get('dob')?.hasError('dobError')">Professor must be 18 years old</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Qualification</mat-label>
+                                <input matInput type="text" formControlName="qualification">
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Experience Row -->
+                        <div class="form-row">
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Total Year Of Exp</mat-label>
+                                <mat-select formControlName="totalYearOfExperience">
+                                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="professorForm.get('totalYearOfExperience')?.hasError('required')">This is mandatory field</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Total Exp In Teaching</mat-label>
+                                <mat-select formControlName="totalYearOfExperienceInTeaching">
+                                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="professorForm.get('totalYearOfExperienceInTeaching')?.hasError('required')">This is mandatory field</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Gender Section with fixed margin -->
+                        <div class="gender-section professor-margin">
+                            <mat-label>Gender:</mat-label>
+                            <mat-radio-group aria-label="Select Gender" formControlName="gender">
+                                <mat-radio-button [ngStyle]="{'margin-left':'5px'}" value="Male">Male</mat-radio-button>
+                                <mat-radio-button [ngStyle]="{'margin-left':'5px'}" value="Female">Female</mat-radio-button>
+                                <mat-radio-button [ngStyle]="{'margin-left':'5px'}" value="Other">Other</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <!-- RIGHT COLUMN: Address & Subjects -->
+            <div class="column">
+                <!-- Address Collapsible Panel -->
+                <mat-accordion multi="true">
+                    <mat-expansion-panel expanded="true" formGroupName="address" class="professor-margin">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Address Details</mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <div class="form-row">
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Address Line1</mat-label>
+                                <input matInput type="text" formControlName="addressLine1">
+                                <mat-error *ngIf="professorForm.get('address.addressLine1')?.hasError('required')">This is mandatory field</mat-error>
+                                <mat-error *ngIf="professorForm.get('address.addressLine1')?.hasError('minlength')">Minimum length is 10</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Address Line2</mat-label>
+                                <input matInput type="text" formControlName="addressLine2">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>City</mat-label>
+                                <input matInput type="text" formControlName="city">
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>State</mat-label>
+                                <input matInput type="text" formControlName="state">
+                            </mat-form-field>
+
+                            <mat-form-field class="professor-full-width">
+                                <mat-label>Pincode</mat-label>
+                                <input matInput type="text" formControlName="pincode">
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <!-- Subjects Dynamic Array -->
+                <div class="subject-header professor-margin">
+                    <button [ngStyle]="{'margin-top':'3px'}" type="button" mat-raised-button color="primary" (click)="addSubject()">+ Add Subject</button>
+                </div>
+
+                <div formArrayName="subjects">
+                    <mat-accordion multi="true">
+                        <mat-expansion-panel *ngFor="let subject of subjects.controls; let i = index" [formGroupName]="i" class="subject-panel-margin">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Subject {{ i + 1 }}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <div class="form-row">
+                                <mat-form-field class="professor-full-width">
+                                    <mat-label>Subject Name</mat-label>
+                                    <input matInput type="text" formControlName="name">
+                                    <mat-error *ngIf="professorForm.get(['subjects', i, 'name'])?.hasError('required')">This is mandatory field</mat-error>
+                                    <mat-error *ngIf="professorForm.get(['subjects', i, 'name'])?.hasError('minlength')">Minimum length is 2</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="professor-full-width">
+                                    <mat-label>Year Of Experience</mat-label>
+                                    <mat-select formControlName="yearOfExperience">
+                                        <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <mat-action-row>
+                                <button type="button" mat-button color="warn" (click)="onDelete(i)">
+                                    <mat-icon>delete</mat-icon> Delete Subject
+                                </button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+
+        </div> <!-- End of 2-Column Layout Wrapper -->
+
+        <!-- Footer Section (Spans Full Width) -->
+        <div class="form-footer">
+            <mat-checkbox [ngStyle]="{'margin-top':'10px', 'margin-bottom': '10px'}" class="tnc-section professor-margin" formControlName="tnc" (change)="changedTnc()">Term & Condition</mat-checkbox>
+
+            <div *ngIf="professorForm.get('signature')" class="professor-margin">
+                <mat-form-field class="professor-full-width">
+                    <mat-label>Signature</mat-label>
+                    <input matInput type="text" formControlName="signature">
+                </mat-form-field>
+            </div>
+
+            <div class="form-actions professor-margin">
+                <button type="submit" mat-raised-button color="primary">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>

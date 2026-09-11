@@ -1,0 +1,22 @@
+<div class="faq-container">
+  <h3>Top 5 FAQ</h3>
+  
+  <table class="faq-table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Department</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let f of faq | slice:0:5">
+        <td>{{f.id}}</td>
+        <td>{{f.question}}</td>
+        <td>{{f.answer | lowercase}}</td>
+        <td><span class="dept-badge">{{f.dept | uppercase }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

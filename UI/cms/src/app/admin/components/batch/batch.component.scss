@@ -1,0 +1,53 @@
+.batch-container {
+  padding: 32px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.batch-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+
+  mat-card-header {
+    margin-bottom: 24px;
+    
+    mat-card-title {
+      font-size: 1.5rem;
+      color: #2d3748;
+      font-weight: 600;
+    }
+  }
+}
+
+.batch-form-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid #edf2f7;
+}
+
+/* Styles specifically for the data inside the Dialog popup */
+.confirm-details {
+  background-color: #f7fafc;
+  padding: 16px;
+  border-radius: 6px;
+  margin-top: 12px;
+  border: 1px solid #e2e8f0;
+
+  p {
+    margin: 4px 0;
+    font-size: 1rem;
+    color: #4a5568;
+  }
+}

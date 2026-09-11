@@ -1,0 +1,182 @@
+<div class="exam-session-wrapper mt-5 pt-3" *ngIf="!isLoading && examData">
+  
+  <!-- Sticky Header Bar -->
+  <header class="exam-header shadow-sm bg-white py-3 px-4 border-bottom">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div>
+        <h4 class="mb-0 fw-bold text-dark">{{ examData.examName }}</h4>
+        <small class="text-muted">{{ examData.description }}</small>
+      </div>
+
+      <div class="d-flex align-items-center gap-4">
+        <!-- Timer -->
+        <div class="timer-badge px-3 py-2 rounded-pill bg-light border d-flex align-items-center shadow-sm">
+          <i class="bi bi-clock-history text-danger fs-5 me-2"></i>
+          <div>
+            <small class="d-block text-muted" style="font-size: 10px; line-height: 1;">Time Remaining</small>
+            <span class="fw-bold text-danger fs-6">{{ timerFormatted }}</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button class="btn btn-success px-4 fw-semibold shadow-sm" (click)="openSubmitConfirmation()">
+          <i class="bi bi-send-check me-1"></i> Submit Exam
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="container-fluid py-4 px-4">
+    <div class="row">
+
+      <!-- Left Sidebar -->
+      <div class="col-lg-3 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+          <h6 class="fw-bold text-secondary mb-3">Exam Subjects</h6>
+          
+          <div class="list-group subject-list mb-3">
+            <button 
+              *ngFor="let subject of subjects"
+              type="button" 
+              class="list-group-item list-group-item-action border-0 rounded-3 mb-2 d-flex justify-content-between align-items-center fw-semibold"
+              [class.active]="currentSubject === subject"
+              (click)="selectSubject(subject)">
+              {{ subject }}
+              <span class="badge rounded-pill" [class.bg-white]="currentSubject === subject" [class.text-dark]="currentSubject === subject" [class.bg-light]="currentSubject !== subject" [class.text-muted]="currentSubject !== subject">
+                {{ examData.questions[subject]?.length || 0 }}
+              </span>
+            </button>
+          </div>
+
+          <hr class="text-muted opacity-25">
+
+          <!-- Palette -->
+          <h6 class="fw-bold text-secondary mb-2 fs-7">Question Palette</h6>
+          <div class="palette-grid d-flex flex-wrap gap-1 mb-3" style="max-height: 180px; overflow-y: auto;">
+            <button 
+              *ngFor="let q of getCurrentQuestions(); let i = index"
+              type="button"
+              class="btn btn-sm rounded-2 fw-bold"
+              [style.width]="'34px'"
+              [style.height]="'34px'"
+              [class.btn-primary]="currentIndex === i"
+              [class.btn-success]="isQuestionAnswered(q.id) && currentIndex !== i"
+              [class.btn-outline-secondary]="!isQuestionAnswered(q.id) && currentIndex !== i"
+              (click)="goToQuestion(i)">
+              {{ i + 1 }}
+            </button>
+          </div>
+
+          <div class="progress-summary text-center py-2 border-top pt-3">
+            <span class="text-muted small d-block mb-1">Answered Questions</span>
+            <h3 class="fw-bold text-primary mb-0">
+              {{ getAnsweredCount() }} <span class="text-muted fs-6 fw-normal">/ {{ getTotalQuestionsCount() }}</span>
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Main Panel -->
+      <div class="col-lg-9">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white" *ngIf="getCurrentQuestion() as q">
+          
+          <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <h5 class="fw-bold text-dark mb-0">
+              <i class="bi bi-folder2-open text-primary me-2"></i> {{ currentSubject }} 
+              <span class="text-muted fs-6 fw-normal ms-2">(Question {{ currentIndex + 1 }} of {{ getCurrentQuestions().length }})</span>
+            </h5>
+          </div>
+
+          <!-- Question Card -->
+          <div class="question-card mb-4 p-4 rounded-4 border bg-light-subtle">
+            <div class="d-flex align-items-start mb-4">
+              <span class="question-number badge bg-primary rounded-circle p-2 me-3 text-center d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; min-width: 36px;">
+                {{ currentIndex + 1 }}
+              </span>
+              <h5 class="fw-semibold text-dark mt-1 mb-0 lh-base">{{ q.question }}</h5>
+            </div>
+
+            <div class="options-grid ps-5">
+              <div class="form-check custom-option mb-3 p-3 rounded-3 border bg-white" [class.border-primary]="isAnswerSelected(q.id, q.option1)">
+                <input class="form-check-input ms-1" type="radio" [name]="q.id" [id]="q.id + '_1'" [checked]="isAnswerSelected(q.id, q.option1)" (change)="trackAnswer(q.id, q.option1)">
+                <label class="form-check-label w-100 ps-2 cursor-pointer" [for]="q.id + '_1'">{{ q.option1 }}</label>
+              </div>
+              <div class="form-check custom-option mb-3 p-3 rounded-3 border bg-white" [class.border-primary]="isAnswerSelected(q.id, q.option2)">
+                <input class="form-check-input ms-1" type="radio" [name]="q.id" [id]="q.id + '_2'" [checked]="isAnswerSelected(q.id, q.option2)" (change)="trackAnswer(q.id, q.option2)">
+                <label class="form-check-label w-100 ps-2 cursor-pointer" [for]="q.id + '_2'">{{ q.option2 }}</label>
+              </div>
+              <div class="form-check custom-option mb-3 p-3 rounded-3 border bg-white" [class.border-primary]="isAnswerSelected(q.id, q.option3)">
+                <input class="form-check-input ms-1" type="radio" [name]="q.id" [id]="q.id + '_3'" [checked]="isAnswerSelected(q.id, q.option3)" (change)="trackAnswer(q.id, q.option3)">
+                <label class="form-check-label w-100 ps-2 cursor-pointer" [for]="q.id + '_3'">{{ q.option3 }}</label>
+              </div>
+              <div class="form-check custom-option mb-0 p-3 rounded-3 border bg-white" [class.border-primary]="isAnswerSelected(q.id, q.option4)">
+                <input class="form-check-input ms-1" type="radio" [name]="q.id" [id]="q.id + '_4'" [checked]="isAnswerSelected(q.id, q.option4)" (change)="trackAnswer(q.id, q.option4)">
+                <label class="form-check-label w-100 ps-2 cursor-pointer" [for]="q.id + '_4'">{{ q.option4 }}</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+            <button class="btn btn-outline-secondary px-4 fw-semibold" (click)="prevQuestion()" [disabled]="currentIndex === 0 && subjects.indexOf(currentSubject) === 0">
+              <i class="bi bi-arrow-left me-1"></i> Previous
+            </button>
+            <button class="btn btn-primary px-4 fw-semibold" (click)="nextQuestion()">
+              Next <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Modal -->
+  <div class="modal fade" [class.show]="isSubmitModalOpen" [style.display]="isSubmitModalOpen ? 'block' : 'none'" tabindex="-1" *ngIf="isSubmitModalOpen">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        
+        <!-- SUCCESS VIEW -->
+        <div class="modal-body text-center py-5" *ngIf="submissionSuccess">
+          <i class="bi bi-check-circle-fill text-success display-1 mb-3"></i>
+          <h4 class="fw-bold text-dark">Exam Submitted Successfully!</h4>
+          <p class="text-muted small">Redirecting to your student portal...</p>
+          <div class="spinner-border spinner-border-sm text-success mt-2" role="status"></div>
+        </div>
+
+        <!-- REVIEW & ERROR VIEW -->
+        <div *ngIf="!submissionSuccess">
+          <div class="modal-header border-bottom-0 pb-0">
+            <h5 class="modal-title fw-bold text-dark"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Ready to Submit?</h5>
+            <button type="button" class="btn-close" (click)="closeSubmitConfirmation()" [disabled]="isSubmitting"></button>
+          </div>
+          <div class="modal-body py-4">
+            <p class="text-muted mb-3">Please review your progress:</p>
+            <div class="p-3 bg-light rounded-3 d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold text-secondary">Total Questions:</span>
+              <span class="fw-bold text-dark">{{ getTotalQuestionsCount() }}</span>
+            </div>
+            <div class="p-3 bg-light rounded-3 d-flex justify-content-between align-items-center mb-3">
+              <span class="fw-semibold text-secondary">Answered:</span>
+              <span class="fw-bold text-primary">{{ getAnsweredCount() }}</span>
+            </div>
+
+            <!-- Inline error banner instead of alert popups -->
+            <div *ngIf="submissionError" class="alert alert-danger rounded-3 py-2 px-3 small mb-0">
+              <i class="bi bi-x-circle-fill me-1"></i> {{ submissionError }}
+            </div>
+          </div>
+          <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+            <button type="button" class="btn btn-outline-secondary px-4 fw-semibold rounded-pill" (click)="closeSubmitConfirmation()" [disabled]="isSubmitting">Resume</button>
+            <button type="button" class="btn btn-success px-4 fw-semibold rounded-pill shadow-sm" (click)="confirmAndSubmit()" [disabled]="isSubmitting">
+              <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+              {{ isSubmitting ? 'Submitting...' : 'Yes, Submit' }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show" *ngIf="isSubmitModalOpen"></div>
+</div>

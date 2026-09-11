@@ -1,0 +1,35 @@
+<div class="popup-modal-container">
+  
+  <!-- Modal Header with Title, Date, and Close Button -->
+  <div class="popup-header">
+    <div class="header-title-wrapper">
+      <h4>{{noticeDetails?.title}}</h4>
+      <span class="notice-date">{{noticeDetails?.date | date:"dd/MM/yyyy"}}</span>
+    </div>
+    <button class="btn-close" (click)="onClose()"></button>
+  </div>
+
+  <!-- Modal Body Content -->
+  <div class="popup-body">
+    <!-- Short Description Section -->
+    <div *ngIf="noticeDetails?.description" class="notice-description-banner">
+      <i class="bi bi-info-circle-fill"></i>
+      <p>{{noticeDetails.description}}</p>
+    </div>
+
+    <!-- Main Full Message Body -->
+    <div class="notice-full-message">
+      <p>{{noticeDetails?.fullMessage}}</p>
+    </div>
+  </div>
+
+  <!-- Modal Footer with Fixed Author Badge and Close Action -->
+  <div class="popup-footer">
+    <div *ngIf="noticeDetails?.author" class="author-badge">
+      <i class="bi bi-person-fill"></i>
+      <span>Posted by <strong>{{noticeDetails.author}}</strong></span>
+    </div>
+    <button class="btn btn-secondary btn-sm" (click)="onClose()">Close</button>
+  </div>
+
+</div>

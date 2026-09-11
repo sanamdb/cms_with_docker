@@ -1,0 +1,123 @@
+<div class="student-profile-container">
+
+   <!-- 1. Profile Header & Description Banner -->
+   <div class="profile-hero-banner">
+      <div class="hero-avatar-box">
+         <img    
+        [src]="loggedInProfile?.profilePic ? 'data:image/jpeg;base64,' + loggedInProfile.profilePic : 'assets/default-avatar.png'"
+            alt="Profile Photo"     class="profile-avatar-img">
+         <span class="status-dot"></span>
+        </div>
+      <div class="hero-title-content">
+         <h2>{{ loggedInProfile.firstName }} {{ loggedInProfile.lastName }}</h2>
+         <div class="badge-row">
+            <span class="badge role-badge">{{ role | titlecase }}</span>
+            <span class="text-muted small"><i class="bi bi-envelope me-1"></i> {{ loggedInProfile.email }}</span>
+            <span class="text-muted small"><i class="bi bi-telephone ms-2 me-1"></i> {{ loggedInProfile.phoneNo
+          }}</span>
+           </div>
+         <p class="hero-subtitle mb-0">Manage your personal credentials, contact info, and active academic enrolment
+        status.</p>
+        </div>
+     </div>
+
+   <!-- 2. Main Content Grid Layout -->
+   <div class="profile-info-grid">
+
+      <!-- LEFT COLUMN: Personal Info & Contact -->
+      <div class="info-card">
+         <div class="card-header-custom">
+            <i class="bi bi-person-fill text-primary"></i>
+            <span>Personal Details</span>
+           </div>
+        
+         <div class="data-row">
+            <span class="lbl">Full Name</span>
+            <span class="val">{{ loggedInProfile.firstName }} {{ loggedInProfile.lastName }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">Date of Birth</span>
+            <span class="val">{{ loggedInProfile.dob | date: 'dd MMM, yyyy' }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">Email Address</span>
+            <span class="val">{{ loggedInProfile.email }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">Alternate Email</span>
+            <span class="val">{{ loggedInProfile.alternateEmail || 'N/A' }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">Phone Number</span>
+            <span class="val">{{ loggedInProfile.phoneNo }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">Alternate Phone</span>
+            <span class="val">{{ loggedInProfile.alternatePhoneNo || 'N/A' }}</span>
+           </div>
+        </div>
+
+      <!-- RIGHT COLUMN: Address & Location -->
+      <div class="info-card">
+         <div class="card-header-custom">
+            <i class="bi bi-geo-alt-fill text-danger"></i>
+            <span>Address & Location</span>
+           </div>
+
+         <div class="data-row">
+            <span class="lbl">Street Address</span>
+            <span class="val text-end">{{ loggedInProfile.fullAddress }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">City</span>
+            <span class="val">{{ loggedInProfile.city }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">State</span>
+            <span class="val">{{ loggedInProfile.state }}</span>
+           </div>
+         <div class="data-row">
+            <span class="lbl">Pincode</span>
+            <span class="val">{{ loggedInProfile.pincode }}</span>
+           </div>
+        </div>
+
+      <!-- BOTTOM FULL WIDTH: Academic & Admission Details -->
+      <div class="info-card full-span">
+         <div class="card-header-custom">
+            <i class="bi bi-mortarboard-fill text-success"></i>
+            <span>Academic & Department Enrolment</span>
+           </div>
+
+         <div class="academic-cards-wrapper" *ngIf="admission; else noAdmission">
+            <div class="acad-pill">
+          <span class="acad-label">Enrolled Campus</span>
+          <span class="acad-value text-primary">{{ campus?.name || 'Loading Campus...' }}</span>
+          <small class="text-muted"><i class="bi bi-geo me-1"></i>{{ campus?.city }}, {{ campus?.address
+            }}</small>
+              </div>
+
+            <div class="acad-pill">
+          <span class="acad-label">Course / Department</span>
+          <span class="acad-value text-dark">{{ department?.name || 'Loading Department...' }}</span>
+          <small class="text-muted">{{ department?.description }} (Duration: {{ department?.duration }} {{
+            department?.termType }})</small>
+              </div>
+
+            <div class="acad-pill">
+          <span class="acad-label">Active Batch</span>
+          <span class="acad-value"><span
+              class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 fs-6">{{
+              admission.batch }}</span></span>
+          <small class="text-muted font-monospace">Admission ID: {{ admission.id }}</small>
+              </div>
+           </div>
+
+         <ng-template #noAdmission>
+            <p class="text-muted text-center py-3 mb-0">No active academic admission mapping found.</p>
+           </ng-template>
+        </div>
+
+     </div>
+
+</div>

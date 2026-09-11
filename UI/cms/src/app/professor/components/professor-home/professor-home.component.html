@@ -1,0 +1,43 @@
+<div class="professor-portal-container">
+    
+    <!-- Left Sidebar Menu -->
+    <aside class="sidebar">
+        <div class="user-profile">
+            <div class="avatar">
+                <mat-icon>person</mat-icon>
+            </div>
+            <div class="user-info">
+                <h4>Professor Portal</h4>
+                <span>Faculty Access</span>
+            </div>
+        </div>
+
+        <nav class="navigation-menu">
+            <span class="nav-section-title">NAVIGATION</span>
+            
+            <!-- Dynamic Router Links -->
+            <a *ngFor="let item of menuItems" 
+               [routerLink]="item.route" 
+               routerLinkActive="active-link" 
+               class="nav-item">
+                <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+                <span>{{ item.label }}</span>
+            </a>
+        </nav>
+        
+        <!-- Bottom Action / Logout -->
+        <div class="sidebar-footer">
+            <button (click)="logoutProfessor()" class="nav-item logout">
+                <mat-icon>logout</mat-icon>
+                <span>Sign Out</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Right-Side Content Area -->
+    <main class="main-content">
+        <!-- Angular Router will inject the selected components here -->
+        <router-outlet></router-outlet>
+    </main>
+
+</div>

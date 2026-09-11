@@ -1,0 +1,108 @@
+.faq-admin-wrapper {
+  /* Changed to row for side-by-side layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* Aligns both columns to the top */
+  gap: 40px; /* Space between the table and the form */
+  padding: 20px;
+  max-width: 1400px; /* Increased slightly to give both elements breathing room */
+  margin: 0 auto;
+}
+
+.faq-list-container {
+  flex: 1; /* Allows the table to take up the remaining left space */
+  min-width: 600px; /* Prevents the table from getting too squished on smaller screens */
+}
+
+.action-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 480px; /* Fixed width for the form side */
+  flex-shrink: 0; /* Prevents the right column from shrinking */
+  /* Added a slight top margin to align perfectly with the inner table card */
+  margin-top: 35px; 
+}
+
+/* Floating Action Button Styling (+) */
+.btn-fab-add {
+  background-color: #0d6efd; 
+  color: #ffffff;
+  border: none;
+  border-radius: 8px; 
+  width: 46px;
+  height: 46px;
+  font-size: 1.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  &:hover {
+    background-color: #0b5ed7;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Form Container Styling */
+.form-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 32px;
+  width: 100%; /* Fills the 480px action-container */
+  border: 1px solid #edf2f7;
+
+  .form-group {
+    margin-bottom: 20px;
+
+    .form-control {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      color: #2d3748;
+      background-color: #fff;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+      &:focus {
+        outline: none;
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+      }
+
+      &::placeholder {
+        color: #adb5bd; 
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn-publish {
+      background-color: #0076c8; 
+      color: #ffffff;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #005f9e;
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+# Java / Maven build outputs
+**/target/
+*.class
+
+# Angular / Node build outputs
+**/node_modules/
+**/dist/
+**/coverage/
+**/.angular/
+
+# IDE and local metadata
+.metadata/
+**/.settings/
+**/.vscode/
+**/.idea/
+*.log
+
+# Operating-system files
+Thumbs.db
+.DS_Store
+
+# Local environment files
+.env
+.env.*
+!.env.example

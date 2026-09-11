@@ -1,0 +1,62 @@
+<div class="batch-container">
+    <mat-card class="batch-card">
+        <mat-card-header>
+            <mat-card-title>Create New Batch</mat-card-title>
+            <mat-card-subtitle>Configure the academic year and current admission status.</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="batch-form-content">
+            <form [formGroup]="batchForm" class="batch-form">
+                
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Academic Year</mat-label>
+                    <mat-select formControlName="academicYear">
+                        <mat-option *ngFor="let year of years" [value]="year">
+                            {{ year }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="batchForm.get('academicYear')?.hasError('required')">
+                        Academic Year is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Batch Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option *ngFor="let status of statuses" [value]="status">
+                            {{ status }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="batchForm.get('status')?.hasError('required')">
+                        Status is required
+                    </mat-error>
+                </mat-form-field>
+
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions class="form-actions">
+            <button mat-raised-button color="primary" (click)="openConfirmation()">Save Batch</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<!-- ========================================== -->
+<!-- Confirmation Dialog Popup Template         -->
+<!-- ========================================== -->
+<ng-template #confirmDialog>
+    <h2 mat-dialog-title>Confirm Batch Creation</h2>
+    
+    <mat-dialog-content>
+        <p>Are you sure you want to create the following batch?</p>
+        <div class="confirm-details">
+            <p><strong>Academic Year:</strong> {{ batchForm.get('academicYear')?.value }}</p>
+            <p><strong>Status:</strong> {{ batchForm.get('status')?.value }}</p>
+        </div>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="cancelSubmit()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="confirmSubmit()">Yes, Create</button>
+    </mat-dialog-actions>
+</ng-template>

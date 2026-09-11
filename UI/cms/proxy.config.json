@@ -1,0 +1,37 @@
+{
+  "/auth": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/college": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/student": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/exam": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  }, 
+  "/question": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/users": {
+    "target": "http://localhost:8443",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

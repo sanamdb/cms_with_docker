@@ -1,0 +1,8 @@
+<div class="portal-info-container" *ngIf="loginExpire">
+  <div class="session-badge animate-fade-in">
+    <i class="bi bi-clock-history icon-blue"></i>
+    <span class="session-label">Session Expires:</span>
+    <!-- The date pipe formats "2026-08-13T02:08:53..." into "Aug 13, 2026, 2:08 AM" -->
+    <span class="session-time">{{ loginExpire | date:'MMM d, y, h:mm a' }}</span>
+  </div>
+</div>

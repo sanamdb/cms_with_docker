@@ -1,0 +1,85 @@
+.exam-container {
+  padding: 32px;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.exam-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+
+  mat-card-header {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 16px;
+
+    mat-card-title {
+      font-size: 1.5rem;
+      color: #2d3748;
+      font-weight: 600;
+    }
+  }
+}
+
+.exam-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  
+  mat-form-field {
+    flex: 1;
+    min-width: 250px;
+  }
+}
+
+/* --- Dynamic Subjects Area --- */
+.subjects-section {
+  margin-top: 16px;
+  padding: 24px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+
+  .subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    h3 {
+      margin: 0;
+      color: #334155;
+      font-weight: 500;
+    }
+  }
+
+  .subject-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+
+    /* Aligns the delete icon properly alongside the Material input box */
+    .delete-btn {
+      margin-top: -16px; 
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #edf2f7;
+}

@@ -1,0 +1,44 @@
+.portal-info-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the badge to the right */
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.session-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 50px; /* Makes it a pill shape */
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  font-size: 0.85rem;
+}
+
+.icon-blue {
+  color: #3b82f6;
+  font-size: 1rem;
+}
+
+.session-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.session-time {
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Smooth entry animation */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

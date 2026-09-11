@@ -1,0 +1,141 @@
+<div class="profile-layout-wrapper">
+
+  <!-- LEFT FIXED SIDEBAR -->
+  <aside class="profile-sidebar">
+
+    <!-- User Profile Brief -->
+    <div class="sidebar-user-card">
+      <div class="avatar-wrapper">
+        <img
+          [src]="loggedInProfile?.profilePic ? 'data:image/jpeg;base64,' + loggedInProfile.profilePic : 'assets/default-avatar.png'"
+          alt="Profile Photo">
+        <span class="status-indicator"></span>
+      </div>
+      <div class="user-info">
+        <h4 class="user-name">{{ loggedInProfile?.firstName }} {{ loggedInProfile?.lastName }}</h4>
+        <span class="user-role">{{ role | titlecase}}</span>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Options -->
+    <div class="sidebar-menu">
+      <span class="menu-category">Navigation</span>
+
+      <!-- 1. My Profile -->
+      <button class="menu-item" [class.active]="activeTab === 'profile'" (click)="setTab('profile')">
+        <i class="bi bi-person-fill"></i>
+        <span>My Profile</span>
+      </button>
+
+      <!-- 2. My Applications Collapsible Accordion Menu -->
+      <div class="menu-dropdown-wrapper" [class.open]="isApplicationsOpen">
+        <button class="menu-item dropdown-toggle-btn" (click)="toggleApplicationsMenu()">
+          <div class="menu-item-left">
+            <i class="bi bi-journal-check"></i>
+            <span>My Applications</span>
+          </div>
+          <i class="bi" [ngClass]="isApplicationsOpen ? 'bi-dash' : 'bi-plus'"></i>
+        </button>
+
+        <!-- Submenu Tree with Vertical Line -->
+        <div class="submenu-tree" *ngIf="isApplicationsOpen">
+          <div class="tree-vertical-line"></div>
+          
+          <div class="submenu-items">
+            <!-- Sub-button 1 -->
+            <button 
+              class="sub-menu-item" 
+              [class.active]="activeTab === 'apply-new'" 
+              (click)="setTab('apply-new')">
+              <span>Apply New Application</span>
+            </button>
+
+            <!-- Sub-button 2 -->
+            <button 
+              class="sub-menu-item" 
+              [class.active]="activeTab === 'continue-existing'" 
+              (click)="setTab('continue-existing')">
+              <span>Applied Applications</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Fee exams -->
+      <button class="menu-item" [class.active]="activeTab === 'exams'" (click)="setTab('exams')">
+        <i class="bi bi-wallet2"></i>
+        <span>Examination</span>
+      </button>
+
+    </div>
+
+    <!-- Sidebar Footer / Logout -->
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logoutUser()">
+        <i class="bi bi-box-arrow-left"></i>
+        <span>Sign Out</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- RIGHT DYNAMIC CONTENT AREA -->
+  <main class="profile-content-area">
+
+    <div [ngSwitch]="activeTab">
+
+      <!-- 1. Profile -->
+      <div *ngSwitchCase="'profile'" class="tab-pane animate-fade-in">
+        <div class="content-header">
+          <app-student-profile></app-student-profile>
+        </div>
+      </div>
+
+      <!-- 2. Apply New Application -->
+      <div *ngSwitchCase="'apply-new'" class="tab-pane animate-fade-in">
+        <app-admission-apply></app-admission-apply>
+      </div>
+
+      <!-- 3. Continue Existing Application -->
+      <div *ngSwitchCase="'continue-existing'" class="tab-pane animate-fade-in">
+        <app-existing-application></app-existing-application>
+      </div>
+
+      <!-- 4. Fee exams -->
+      <div *ngSwitchCase="'exams'" class="tab-pane animate-fade-in">
+        <app-schedule-exam></app-schedule-exam>
+      </div>
+
+      <!-- Fallback / Error State -->
+      <div *ngSwitchDefault class="tab-pane animate-fade-in d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="empty-state-card text-center p-5 bg-white rounded-4 shadow-sm border-0" style="max-width: 480px;">
+          
+          <!-- Animated Icon Circle -->
+          <div class="icon-circle bg-danger bg-opacity-10 text-danger mx-auto d-flex justify-content-center align-items-center rounded-circle mb-4" style="width: 80px; height: 80px;">
+            <i class="bi bi-tools display-5"></i>
+          </div>
+          
+          <!-- Typography -->
+          <h3 class="fw-bold text-dark mb-2">Something went wrong</h3>
+          <p class="text-muted mb-4 px-3" style="line-height: 1.6;">
+            We encountered an issue while loading your data. Our team is actively working to resolve the student portal connection.
+          </p>
+          
+          <!-- Action Buttons -->
+          <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-outline-secondary px-4 py-2 rounded-pill fw-semibold" (click)="logoutUser()">
+              <i class="bi bi-box-arrow-left me-2"></i> Return to Login
+            </button>
+            <button class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm" (click)="loadLoggedInUserProfile()">
+              <i class="bi bi-arrow-clockwise me-2"></i> Try Again
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

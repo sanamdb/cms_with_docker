@@ -1,0 +1,457 @@
+/* Inherits layout container styling from global app-layout */
+
+/* Layout container */
+.app-layout {
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 75px);
+  margin-top: 58px;
+  overflow: hidden;
+  background-color: #f4f6f9;
+}
+
+/* Notice Board Sidebar Styling (~18-20% width) */
+.notice-sidebar {
+  flex: 0 0 22%;
+  max-width: 250px;
+  min-width: 220px;
+  height: 100%;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header Section (Zero wasted top space) */
+.notice-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.3px;
+}
+
+/* Scrollable Container for Notices */
+.notice-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Custom Scrollbar for Notices */
+.notice-container::-webkit-scrollbar {
+  width: 5px;
+}
+.notice-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.notice-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Main Layout Theme */
+.main-content {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f8fafc;
+  position: relative;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+/* Immersive Hero Banner */
+.campus-hero-banner {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  background-color: #0f172a;
+  display: flex;
+  align-items: flex-end;
+}
+
+.campus-hero-banner img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 10%, rgba(15, 23, 42, 0.4) 70%, transparent 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 30px;
+  color: #ffffff;
+  width: 100%;
+}
+
+.city-pill {
+  background: rgba(59, 130, 246, 0.85);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.hero-content h1 {
+  margin: 0 0 6px 0;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.campus-address {
+  margin: 0 0 16px 0;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.campus-hero-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+}
+
+.campus-hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Section Title Bar */
+.section-title-bar h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.section-title-bar p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Departments Grid (2 columns on standard desktop views) */
+.departments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+/* Individual Department Card Design */
+.dept-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dept-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+}
+
+.dept-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.dept-code-badge {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.status-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.status-badge.active {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.dept-main-info {
+  margin-bottom: 16px;
+}
+
+.dept-name {
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dept-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Metrics Data Sub-grid */
+.dept-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #f1f5f9;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.metric-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.highlight-fees {
+  color: #0284c7;
+}
+
+/* Faculty Info Row */
+.dept-faculty-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #475569;
+  margin-bottom: 20px;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 12px;
+}
+
+.faculty-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Card Footer Apply Button */
+.dept-card-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.apply-btn {
+  width: 100%;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.apply-btn:hover {
+  background: #1d4ed8;
+}
+
+.apply-btn:active {
+  transform: scale(0.98);
+}
+
+/* Backdrop Overlay */
+.custom-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(5px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Modal Card Box */
+.custom-modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Icon Header */
+.modal-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+}
+
+.modal-icon-wrapper.warning {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* Content */
+.modal-body-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.modal-body-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Action Buttons Container */
+.modal-footer-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-secondary-action {
+  flex: 1;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary-action:hover {
+  background: #e2e8f0;
+}
+
+.btn-primary-action {
+  flex: 1.5;
+  background: #2563eb;
+  border: none;
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.btn-primary-action:hover {
+  background: #1d4ed8;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

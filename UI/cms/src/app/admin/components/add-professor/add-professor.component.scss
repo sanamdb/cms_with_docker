@@ -1,0 +1,99 @@
+.professor-form-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 32px;
+  max-width: 1400px; /* Increased dramatically to utilize page space */
+  margin: 20px auto;
+  border: 1px solid #edf2f7;
+}
+
+.professor-form {
+  width: 100%;
+  /* Removed the max-width: 500px that was restricting the form */
+}
+
+/* NEW: Layout grid to divide the form into 2 parts side-by-side */
+.form-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start; /* Prevents columns from stretching to equal height if one is shorter */
+}
+
+/* NEW: Each column takes up equal space */
+.column {
+  flex: 1;
+  min-width: 400px; /* If the screen gets too small, they will stack on top of each other */
+}
+
+.professor-full-width {
+  width: 100%;
+}
+
+.date {
+  margin-bottom: 20px;
+}
+
+.professor-margin {
+  margin: 0 12px;
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 8px;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 220px;
+  }
+}
+
+.gender-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  
+  mat-label {
+    font-weight: 500;
+    color: #4a5568;
+    margin-right: 8px;
+  }
+
+  mat-radio-group {
+    display: flex;
+    gap: 16px;
+  }
+}
+
+.subject-header {
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.subject-panel-margin {
+  margin-bottom: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.tnc-section {
+  display: block;
+  margin-top: 24px; 
+  margin-bottom: 24px;
+}
+
+.form-footer {
+  margin-top: 32px;
+  border-top: 1px solid #edf2f7;
+  padding-top: 24px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}

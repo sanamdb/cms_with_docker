@@ -1,0 +1,93 @@
+<div class="department-form-container">
+    <h6 *ngIf="id">Id: {{id}}</h6>
+    <h3 class="form-title">Add New Department</h3>
+    <div *ngIf="sucess" class="alert alert-success">
+        {{sucess}}
+    </div>
+    <form #deptForm="ngForm" (ngSubmit)="saveDepartment(deptForm)">
+        <!-- Code Field -->
+        <div class="form-group">
+            <label for="code"> Department Code </label>
+            <input #departmentCode="ngModel" required minlength="2" maxlength="30" type="text" id="code" name="code" class="form-control"
+                placeholder="Department code" [(ngModel)]="departmentForm.code" />
+            
+            <div *ngIf="departmentCode.dirty && departmentCode.getError('required')" class="validation-error">
+                This is a mandatory field
+            </div>
+            <div *ngIf="departmentCode.dirty && departmentCode.getError('minlength')" class="validation-error">
+                Min length is 2
+            </div>
+        </div>
+
+        <!-- Name Field -->
+        <div class="form-group">
+            <label for="name"> Department Name </label>
+            <input #departmentName="ngModel" appCustomValidator required minlength="3" maxlength="30" type="text" id="name" name="name"
+                class="form-control" placeholder="Department name" [(ngModel)]="departmentForm.name" />
+            
+            <div *ngIf="departmentName.dirty && departmentName.getError('required')" class="validation-error">
+                This is a mandatory field
+            </div>
+            <div *ngIf="departmentName.dirty && departmentName.getError('minlength')" class="validation-error">
+                Min length is 3
+            </div>
+            <div *ngIf="departmentName.dirty && departmentName.getError('testError')" class="validation-error">
+                It must not contain test
+                {{departmentName.getError('testError')}}
+            </div>
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group">
+            <label for="description"> Department Description </label>
+            <input #departmentDescription="ngModel" required minlength="3" maxlength="60" type="text" id="description"
+                name="description" class="form-control" placeholder="Department description"
+                [(ngModel)]="departmentForm.description" />
+            
+            <div *ngIf="departmentDescription.dirty && departmentDescription.getError('required')" class="validation-error">
+                This is a mandatory field
+            </div>
+            <div *ngIf="departmentDescription.dirty && departmentDescription.getError('minlength')" class="validation-error">
+                Min length is 3
+            </div>
+        </div>
+
+        <!-- Duration Field (Number uses 'min' and 'max' instead of minlength) -->
+        <div class="form-group">
+            <label for="duration"> Department Duration </label>
+            <input #departmentDuration="ngModel" required min="2" max="14" type="number" id="duration" name="duration" class="form-control"
+                placeholder="Department duration" [(ngModel)]="departmentForm.duration" />
+            
+            <div *ngIf="departmentDuration.dirty && departmentDuration.getError('required')" class="validation-error">
+                This is a mandatory field
+            </div>
+            <div *ngIf="departmentDuration.dirty && departmentDuration.getError('min')" class="validation-error">
+                Minimum duration is 2
+            </div>
+            <div *ngIf="departmentDuration.dirty && departmentDuration.getError('max')" class="validation-error">
+                Maximum duration is 14
+            </div>
+        </div>
+
+        <!-- Term Type Field (Select dropdown) -->
+        <div class="form-group">
+            <label for="term_type">Select Term Type</label>
+            <select #departmentTermType="ngModel" required id="term_type" name="term_type" [(ngModel)]="departmentForm.term_type"
+                class="form-control">
+                <option value="" disabled>Select Term Type</option>
+                <option *ngFor="let term of termType" [value]="term.code">
+                    {{term.label}}
+                </option>
+            </select>
+            
+            <div *ngIf="departmentTermType.dirty && departmentTermType.getError('required')" class="validation-error">
+                Please select a term type
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <!-- Button stays disabled until EVERY required condition in the form is met -->
+            <button type="submit" class="btn-primary" [disabled]="deptForm.invalid">Save Department</button>
+        </div>
+    </form>
+</div>

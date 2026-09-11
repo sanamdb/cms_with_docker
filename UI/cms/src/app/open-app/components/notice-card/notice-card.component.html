@@ -1,0 +1,5 @@
+<div *ngFor="let notice of notices" class="notice-card" (click)="selectedNotice(notice)">
+    <div class="notice-date">{{ notice.date | date:'medium'}}</div>
+    <h6 class="notice-title">{{ notice.title | titlecase}}</h6>
+    <p class="notice-desc">{{ notice.description }}</p>
+</div>

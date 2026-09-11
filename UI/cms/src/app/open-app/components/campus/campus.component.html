@@ -1,0 +1,79 @@
+<div class="app-layout">
+  
+  <!-- Left Side Notice Board Sidebar (Consistent with Home) -->
+  <aside class="notice-sidebar">
+    <div class="notice-header">
+      <i class="bi bi-bell-fill text-primary"></i>
+      <span>Latest Notice</span>
+    </div>
+    <div class="notice-container">
+      <app-notice-card [notices]="noticeList" (notice)="selectedNoticeToDisplay($event)"></app-notice-card>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- Page Header Title & Subtitle -->
+    <div class="page-header-section">
+      <h2>Explore All Campuses</h2>
+      <p class="text-muted">Browse through our comprehensive network of higher education institutions.</p>
+    </div>
+
+    <!-- 2x2 Grid Container (4 Cards per page) -->
+    <div class="campus-grid-container">
+      <div class="campus-card" *ngFor="let campus of campuses" (click)="exploreCampus(campus.id)">
+        
+        <!-- Top Half: Campus Image -->
+        <div class="campus-img-wrapper">
+          <img [src]="'data:image/jpeg;base64,' + campus.campusPicture" [alt]="campus.name">
+          <span class="city-badge"><i class="bi bi-geo-alt-fill"></i> {{ campus.city }}</span>
+        </div>
+
+        <!-- Bottom Half: Details & Address -->
+        <div class="campus-info">
+          <div>
+            <h4 class="campus-name" [title]="campus.name">{{ campus.name }}</h4>
+            <p class="campus-address text-muted"><i class="bi bi-pin-map-fill"></i> {{ campus.address }}</p>
+          </div>
+          <div class="campus-footer-meta">
+            <span class="campus-year"><i class="bi bi-calendar-check"></i> Est. {{ campus.establishedDate | date:'yyyy' }}</span>
+            <span class="explore-link">Details <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modern Pagination Bar -->
+    <nav class="pagination-container" *ngIf="totalPages > 1">
+      <button 
+        class="page-btn" 
+        [disabled]="currentPage === 0" 
+        (click)="onPageChange(currentPage - 1)">
+        <i class="bi bi-chevron-left"></i> Previous
+      </button>
+
+      <div class="page-numbers">
+        <button 
+          *ngFor="let page of getPagesArray()" 
+          class="page-number-btn" 
+          [class.active]="page === currentPage"
+          (click)="onPageChange(page)">
+          {{ page + 1 }}
+        </button>
+      </div>
+
+      <button 
+        class="page-btn" 
+        [disabled]="currentPage === totalPages - 1" 
+        (click)="onPageChange(currentPage + 1)">
+        Next <i class="bi bi-chevron-right"></i>
+      </button>
+    </nav>
+
+    <!-- Pop-up Notice Board Component -->
+    <app-notice-board *ngIf="noticeBoadOpen" (noticeClose)="closeNoticeBoard($event)"></app-notice-board>
+
+  </main>
+</div>

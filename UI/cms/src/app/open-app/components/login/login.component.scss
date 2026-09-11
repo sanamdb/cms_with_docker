@@ -1,0 +1,101 @@
+/* Center and frame the section nicely inside the viewport */
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 75px);
+  background-color: #f8fafc;
+}
+
+.container {
+  max-width: 900px;
+}
+
+/* Optional wrapper card styling to give the raw template a clean container look */
+.col-xl-8 {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.05);
+}
+
+/* Form input enhancements */
+.form-control {
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  background-color: #ffffff !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Floating label fix for custom border radius */
+.form-floating > label {
+  padding: 12px 14px;
+  color: #64748b;
+}
+
+/* Primary Login Button */
+.btn-dark {
+  background-color: #0f172a !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-dark:hover {
+  background-color: #1e293b !important;
+}
+
+/* Social Login Buttons styling refinement */
+.bsb-btn-2xl {
+  border-radius: 10px !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.bsb-btn-2xl:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+
+/* Links & Text Utilities */
+a[routerLink] {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a[routerLink]:hover {
+  text-decoration: underline;
+}
+
+.link-secondary {
+  color: #64748b !important;
+}
+
+.link-secondary:hover {
+  color: #0f172a !important;
+}
+
+/* Error message styling */
+.alert-danger {
+  border-radius: 8px;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+}

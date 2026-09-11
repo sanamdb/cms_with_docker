@@ -1,0 +1,83 @@
+/* --- Container & Typography --- */
+.faq-container {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  max-width: 1000px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.faq-status {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.faq-container h3 {
+  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* --- Table Styling --- */
+.faq-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden; /* Ensures the border-radius applies to corners */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.faq-table thead {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+.faq-table th {
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.faq-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.faq-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.faq-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.faq-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Department Badge --- */
+.dept-badge {
+  display: inline-block;
+  background-color: #e0e7ff;
+  color: #4338ca;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px; /* Pill shape */
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}

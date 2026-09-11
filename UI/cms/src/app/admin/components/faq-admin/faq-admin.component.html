@@ -1,0 +1,33 @@
+<div class="faq-admin-wrapper">
+    <!-- Left Side: FAQ Display List -->
+    <div class="faq-list-container">
+        <app-faq-display-admin [faqList]="faq"></app-faq-display-admin>
+    </div>
+
+    <!-- Right Side: Action Container (Button or Form) -->
+    <div class="action-container">
+        <!-- Floating Add Button -->
+        <button *ngIf="!newFaqToBeAdded" type="button" class="btn-fab-add" (click)="addNewFaq()">+</button>
+
+        <!-- FAQ Form Card -->
+        <div class="form-card" *ngIf="newFaqToBeAdded">
+            <form #faqFrm="ngForm" (ngSubmit)="publishFaq(faqFrm)">
+                <div class="form-group">
+                    <input type="number" id="id" name="id" class="form-control" [(ngModel)]="faqForm.id" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <input appFontAdmin="bold" type="text" id="question" name="question" class="form-control" [(ngModel)]="faqForm.question" placeholder="Enter Question" />
+                </div>
+                <div class="form-group">
+                    <input type="text" id="answer" name="answer" class="form-control" [(ngModel)]="faqForm.answer" placeholder="Enter Answer" />
+                </div>
+                <div class="form-group">
+                    <input type="text" id="dept" name="dept" class="form-control" [(ngModel)]="faqForm.dept" placeholder="Enter Department" />
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-publish">Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

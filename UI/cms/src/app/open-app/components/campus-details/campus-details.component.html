@@ -1,0 +1,136 @@
+<div class="app-layout">
+  
+  <!-- Left Side Notice Board Sidebar (Consistent with Home/Campus List) -->
+  <aside class="notice-sidebar">
+    <div class="notice-header">
+      <i class="bi bi-bell-fill text-primary"></i>
+      <span>Latest Notice</span>
+    </div>
+    <div class="notice-container">
+      <app-notice-card [notices]="noticeList" (notice)="selectedNoticeToDisplay($event)"></app-notice-card>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- Loading / Fallback state if data is loading -->
+    <div *ngIf="!campusDepartment" class="loading-state">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="text-muted mt-2">Loading campus details...</p>
+    </div>
+
+    <!-- Campus Content Container -->
+    <div *ngIf="campusDepartment" class="campus-detail-wrapper">
+      
+      <!-- Top Immersive Campus Banner Hero -->
+      <div class="campus-hero-banner">
+        <img [src]="'data:image/jpeg;base64,' + campusDepartment.campus.campusPicture" [alt]="campusDepartment.campus.name">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="city-pill"><i class="bi bi-geo-alt-fill"></i> {{ campusDepartment.campus.city }}</span>
+          <h1>{{ campusDepartment.campus.name }}</h1>
+          <p class="campus-address"><i class="bi bi-pin-map-fill"></i> {{ campusDepartment.campus.address }}</p>
+          <div class="campus-hero-meta">
+            <span><i class="bi bi-calendar-check"></i> Est. {{ campusDepartment.campus.establishedDate | date:'yyyy' }}</span>
+            <span><i class="bi bi-grid-3x3-gap"></i> {{ campusDepartment.campusDepartment.length }} Departments Offered</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Departments Section Header -->
+      <div class="section-title-bar">
+        <h3>Available Departments & Programs</h3>
+        <p class="text-muted">Explore specialized courses, faculty leads, fee structures, and apply directly.</p>
+      </div>
+
+      <!-- Departments Grid -->
+      <div class="departments-grid">
+        <div class="dept-card" *ngFor="let item of campusDepartment.campusDepartment">
+          
+          <!-- Card Top Bar: Code & Status -->
+          <div class="dept-card-header">
+            <span class="dept-code-badge">{{ item.department.code }}</span>
+            <span class="status-badge" [class.active]="item.offerDepartment.status === 'Active'">
+              {{ item.offerDepartment.status }}
+            </span>
+          </div>
+
+          <!-- Department Name & Description -->
+          <div class="dept-main-info">
+            <h4 class="dept-name">{{ item.department.name }}</h4>
+            <p class="dept-desc text-muted">{{ item.department.description }}</p>
+          </div>
+
+          <!-- Key Metrics Grid -->
+          <div class="dept-metrics">
+            <div class="metric-item">
+              <span class="metric-label">Duration</span>
+              <span class="metric-value"><i class="bi bi-clock-history"></i> {{ item.department.duration }} {{ item.department.termType }}s</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Intake Capacity</span>
+              <span class="metric-value"><i class="bi bi-people-fill"></i> {{ item.offerDepartment.intakeCapacity }} Seats</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Building Block</span>
+              <span class="metric-value"><i class="bi bi-building"></i> {{ item.offerDepartment.buildingBlock }}</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Fees / Term</span>
+              <span class="metric-value highlight-fees">₹ {{ item.offerDepartment.fees | number }}</span>
+            </div>
+          </div>
+
+          <!-- Head of Department & Contact info -->
+          <div class="dept-faculty-info">
+            <div class="faculty-row">
+              <i class="bi bi-person-badge-fill text-primary"></i>
+              <span><strong>HOD:</strong> {{ item.offerDepartment.headOfDepartment }}</span>
+            </div>
+            <div class="faculty-row">
+              <i class="bi bi-envelope-fill text-muted"></i>
+              <span class="text-truncate">{{ item.offerDepartment.contactEmail }}</span>
+            </div>
+          </div>
+
+          <!-- Card Footer Action Button -->
+          <div class="dept-card-footer">
+            <button class="apply-btn" (click)="applyForDepartment(item)">
+              Apply Now <i class="bi bi-arrow-right-short"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pop-up Notice Board Component -->
+    <app-notice-board *ngIf="noticeBoadOpen" (noticeClose)="closeNoticeBoard($event)"></app-notice-board>
+
+    <!-- Modern Custom Admin Restriction Modal Backdrop & Dialog -->
+<div class="custom-modal-backdrop" *ngIf="showAdminWarningModal">
+  <div class="custom-modal-card animate-scale-in">
+    
+    <div class="modal-icon-wrapper warning">
+      <i class="bi bi-shield-exclamation"></i>
+    </div>
+
+    <div class="modal-body-content">
+      <h4>Action Restricted</h4>
+      <p>Administrators are logged in with management privileges and cannot apply for academic courses.</p>
+    </div>
+
+    <div class="modal-footer-actions">
+      <button class="btn-secondary-action" (click)="closeAdminModal()">OK</button>
+      <button class="btn-primary-action" (click)="switchToStudentLogin()">
+        <i class="bi bi-box-arrow-in-right"></i> Login as Student
+      </button>
+    </div>
+
+  </div>
+</div>
+
+  </main>
+</div>

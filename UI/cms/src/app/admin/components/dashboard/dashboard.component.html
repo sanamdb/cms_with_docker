@@ -1,0 +1,112 @@
+<div class="dashboard-container">
+  
+    <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+
+    <ng-container *ngIf="!isLoading && dashboardData">
+        
+        <h2 class="dashboard-title">Overview Dashboard</h2>
+
+        <!-- Top Row: Summary Metrics (4 Cards) -->
+        <div class="metrics-grid">
+            
+            <mat-card class="metric-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="metric-icon bg-blue">
+                        <mat-icon>account_balance</mat-icon>
+                    </div>
+                    <mat-card-title>Total Campuses</mat-card-title>
+                    <mat-card-subtitle>Registered Locations</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1 class="metric-value">{{ dashboardData.totalCampuses }}</h1>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="metric-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="metric-icon bg-green">
+                        <mat-icon>school</mat-icon>
+                    </div>
+                    <mat-card-title>Master Departments</mat-card-title>
+                    <mat-card-subtitle>Available Courses</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1 class="metric-value">{{ dashboardData.totalDepartments }}</h1>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="metric-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="metric-icon bg-orange">
+                        <mat-icon>groups</mat-icon>
+                    </div>
+                    <mat-card-title>Total Intake Capacity</mat-card-title>
+                    <mat-card-subtitle>Across Active Programs</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1 class="metric-value">{{ dashboardData.totalIntakeCapacity }}</h1>
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card class="metric-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="metric-icon bg-purple">
+                        <mat-icon>event_available</mat-icon>
+                    </div>
+                    <mat-card-title>Active Admission</mat-card-title>
+                    <mat-card-subtitle>Current Academic Year</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h1 class="metric-value">{{ dashboardData.activeAdmissionBatch }}</h1>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+
+        <!-- Bottom Row: Data Details (2 Columns) -->
+        <div class="details-grid">
+            
+            <!-- Left Column: Active Campus Programs -->
+            <mat-card class="detail-card">
+                <mat-card-header>
+                    <mat-card-title>Active Campus Programs</mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div class="list-item header">
+                        <span>Campus</span>
+                        <span>Dept</span>
+                        <span>Capacity</span>
+                    </div>
+                    <div class="list-item" *ngFor="let prog of dashboardData.activePrograms">
+                        <span class="bold">{{ prog.campusName }}</span>
+                        <span>{{ prog.departmentName }}</span>
+                        <span class="badge">{{ prog.intakeCapacity }} Seats</span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- Right Column: Registered Campuses -->
+            <mat-card class="detail-card">
+                <mat-card-header>
+                    <mat-card-title>Registered Campuses</mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div class="list-item header">
+                        <span>Name</span>
+                        <span>City</span>
+                    </div>
+                    <div class="list-item" *ngFor="let campus of dashboardData.recentCampuses">
+                        <span class="bold">{{ campus.name }}</span>
+                        <span>{{ campus.city }}</span>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+
+    </ng-container>
+</div>

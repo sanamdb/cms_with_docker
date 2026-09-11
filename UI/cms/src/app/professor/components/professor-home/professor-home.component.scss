@@ -1,0 +1,139 @@
+.professor-portal-container {
+  display: flex;
+  min-height: calc(100vh - 64px); /* Adjust 64px based on your top navbar height */
+  background-color: #f7fafc;
+  margin-top: 57px;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #1a202c; /* Dark theme to match your portal */
+  color: #a0aec0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid #2d3748;
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    padding: 24px 20px;
+    border-bottom: 1px solid #2d3748;
+    
+    .avatar {
+      background-color: #2d3748;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      color: #cbd5e0;
+      
+      mat-icon {
+        font-size: 24px;
+        height: 24px;
+        width: 24px;
+      }
+    }
+    
+    .user-info {
+      display: flex;
+      flex-direction: column;
+
+      h4 {
+        margin: 0;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      span {
+        font-size: 0.8rem;
+        color: #718096;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .navigation-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    flex-grow: 1;
+
+    .nav-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #718096;
+      margin-bottom: 16px;
+      padding-left: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: #a0aec0;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      cursor: pointer;
+
+      mat-icon {
+        margin-right: 12px;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background-color: #2d3748;
+        color: #ffffff;
+      }
+
+      /* This class is applied automatically by routerLinkActive */
+      &.active-link {
+        background-color: #3182ce; 
+        color: #ffffff;
+        box-shadow: 0 4px 6px rgba(49, 130, 206, 0.3);
+      }
+    }
+  }
+
+  .sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid #2d3748;
+    
+    .nav-item.logout {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #fc8181; /* Red warning text */
+      transition: all 0.2s ease;
+      
+      mat-icon {
+        margin-right: 12px;
+      }
+
+      &:hover {
+        background-color: rgba(252, 129, 129, 0.1);
+      }
+    }
+  }
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #f7fafc;
+}

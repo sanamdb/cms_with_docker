@@ -1,0 +1,101 @@
+.career-page-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* These styles target the content passed INTO the projection */
+  .portal-title {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #1a202c;
+    display: inline-block;
+    margin-right: 15px;
+  }
+
+  .hiring-badge {
+    background-color: #def7ec;
+    color: #03543f;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  .intro-text {
+    p {
+      color: #4a5568;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+  }
+
+  .job-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+
+    .job-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background-color: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: #cbd5e0;
+        background-color: #edf2f7;
+      }
+
+      .job-info {
+        h4 {
+          margin: 0 0 5px 0;
+          color: #2d3748;
+          font-size: 1.1rem;
+        }
+
+        .dept {
+          color: #718096;
+          font-size: 0.9rem;
+        }
+      }
+
+      .btn-apply {
+        background-color: #3182ce;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #2b6cb0;
+        }
+      }
+    }
+  }
+
+  .live-update-banner {
+    background-color: #ebf8ff;
+    border-left: 4px solid #3182ce;
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    color: #2a4365;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    strong {
+      color: #2c5282;
+    }
+  }
+}

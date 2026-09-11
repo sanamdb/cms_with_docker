@@ -1,0 +1,92 @@
+<div class="app-layout">
+  
+  <!-- Left Side Notice Board Sidebar -->
+  <aside class="notice-sidebar">
+    <div class="notice-header">
+      <i class="bi bi-bell-fill text-primary"></i>
+      <span>Latest Notice</span>
+    </div>
+
+    <div class="notice-container">
+      <app-notice-card [notices]="noticeList" (notice)="selectedNoticeToDisplay($event)"></app-notice-card>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- Top Hero Carousel Section -->
+    <div class="hero-carousel" (mouseenter)="stopAutoSlide()" (mouseleave)="startAutoSlide()">
+      
+      <div class="carousel-inner">
+        <div 
+          class="carousel-slide" 
+          *ngFor="let slide of slides; let i = index" 
+          [class.active]="i === currentIndex">
+          
+          <!-- Background Image -->
+          <img [src]="slide.image" [alt]="slide.title">
+          
+          <!-- Gradient Overlay for Better Text Readability -->
+          <div class="slide-overlay"></div>
+
+          <!-- Text Overlay -->
+          <div class="slide-content">
+            <h2>{{ slide.title }}</h2>
+            <p>{{ slide.subtitle }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left / Right Control Arrows -->
+      <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
+      <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
+
+      <!-- Dot Indicators -->
+      <div class="carousel-indicators">
+        <span 
+          *ngFor="let slide of slides; let i = index" 
+          [class.active]="i === currentIndex"
+          (click)="goToSlide(i)">
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Bottom Campus List Section Placeholder (Ready for next step) -->
+    <!-- Bottom Campus List Section -->
+    <div class="campus-list-section">
+      <div class="section-header">
+        <h3>Our Top Campuses</h3>
+        <span class="text-muted">Explore our to global infrastructure and regional facilities</span>
+      </div>
+
+      <!-- Horizontal Scrollable Container -->
+      <div class="campus-scroll-container">
+        <div class="campus-track">
+          <div class="campus-card" *ngFor="let campus of campuses" (click)="exploreCampus(campus.id)">
+            
+            <!-- Top Half: Base64 Image -->
+            <div class="campus-img-wrapper">
+              <img [src]="'data:image/jpeg;base64,' + campus.campusPicture" [alt]="campus.name">
+            </div>
+
+            <!-- Bottom Half: Campus Details -->
+            <div class="campus-info">
+              <h4 class="campus-name" [title]="campus.name">{{ campus.name }}</h4>
+              <div class="campus-meta">
+                <span class="campus-city"><i class="bi bi-geo-alt-fill"></i> {{ campus.city }}</span>
+                <span class="campus-year"><i class="bi bi-calendar-check-fill"></i> Est. {{ campus.establishedDate | date:'yyyy'}}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pop-up Notice Board Component (Rendered dynamically when selectedNotice is set) -->
+    <app-notice-board *ngIf="noticeBoadOpen" (noticeClose)="closeNoticeBoard($event)"></app-notice-board>
+
+  </main>
+</div>

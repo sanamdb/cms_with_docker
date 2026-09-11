@@ -1,0 +1,39 @@
+<!-- Centering layout wrapper -->
+<div class="admission-page-wrapper">
+    
+    <!-- Main Form Card (Keeping [ngStyle] and [ngClass] as requested) -->
+    <div [ngStyle]="{'background-color': '#ffffff', 'width': '100%', 'max-width': '550px'}" class="admission-card">
+        
+        <h3 [ngClass]="'applyHeader'">Application for admission</h3>
+        <p class="card-subtitle">Select your target department and academic batch to begin.</p>
+
+        <form #ApplyForm="ngForm" (ngSubmit)="applyForAdmission(ApplyForm)" class="admission-form">
+            
+            <div class="form-group mb-3">
+                <label for="departmentId" class="form-label">Department / Course</label>
+                <select class="form-control custom-select-box" id="departmentId" name="departmentId" [(ngModel)]="applicationForm.departmentId">
+                    <option value="" disabled> Select Department </option>
+                    <option *ngFor="let dept of departments$ | async" [value]="dept.id">
+                        {{dept.name}} ( {{dept.code}} ) - {{dept.description}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="batch" class="form-label">Academic Batch</label>
+                <select class="form-control custom-select-box" id="batch" name="batch" [(ngModel)]="applicationForm.batch">
+                    <option value="" disabled> Select Batch </option>
+                    <option *ngFor="let bth of batch$ | async" [value]="bth.academicYear">
+                        {{bth.academicYear}}
+                    </option>
+                </select>
+            </div>
+
+            <input hidden class="form-control" name="action" id="action" [(ngModel)]="applicationForm.action" value="SUBMIT"/>
+
+            <button class="btn btn-primary submit-btn w-100" type="submit">Submit Application</button>
+
+        </form>
+    </div>
+
+</div>

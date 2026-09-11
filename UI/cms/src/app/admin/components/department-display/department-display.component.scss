@@ -1,0 +1,245 @@
+.department-display-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 32px;
+    margin: 20px auto;
+    border: 1px solid #edf2f7;
+
+    .table-title {
+        margin-top: 0;
+        margin-bottom: 24px;
+        font-size: 1.25rem;
+        color: #2d3748;
+        font-weight: 600;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.95rem;
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        tbody tr {
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: #f1f5f9;
+            }
+        }
+
+        td {
+            color: #2d3748;
+        }
+
+        .font-medium {
+            font-weight: 500;
+            color: #1a202c;
+        }
+
+        .description-cell {
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .capitalize {
+            text-transform: capitalize;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: #718096;
+            font-style: italic;
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        button {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit {
+            background-color: #ebf8ff;
+            color: #3182ce;
+            border: 1px solid #bee3f8;
+
+            &:hover {
+                background-color: #bee3f8;
+                color: #2b6cb0;
+            }
+        }
+
+        .btn-delete {
+            background-color: #fff5f5;
+            color: #e53e3e;
+            border: 1px solid #fed7d7;
+
+            &:hover {
+                background-color: #fed7d7;
+                color: #c53030;
+            }
+        }
+    }
+}
+
+
+/* ============================================== */
+/* MODAL POPUP STYLES                             */
+/* ============================================== */
+.modal-overlay {
+  /* Use absolute to perfectly fill the relative container, or let fixed adapt to the transform trap */
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.animate-pop {
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 16px auto;
+  font-size: 2rem;
+}
+
+.danger-icon {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.success-icon {
+  background: #ecfdf5;
+  color: #10b981;
+}
+
+.modal-content h3 {
+  margin: 0 0 12px 0;
+  color: #0f172a;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.modal-text {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.modal-actions-center {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-cancel, .btn-confirm-danger, .btn-confirm-success {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.btn-cancel {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-cancel:hover {
+  background: #e2e8f0;
+}
+
+.btn-confirm-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-confirm-danger:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-confirm-success {
+  background: #10b981;
+  color: white;
+  width: 100%;
+}
+
+.btn-confirm-success:hover {
+  background: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}

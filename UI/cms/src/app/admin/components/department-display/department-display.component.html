@@ -1,0 +1,51 @@
+<div class="department-display-container">
+    <input type="number" id="duration" name="duration" placeholder="Duration" class="form-control" [(ngModel)]="duration">
+    <h3 class="table-title">Department List</h3>
+    
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Srl No.</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Duration</th>
+                    <th>Term Type</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let dept of departmentList | filterDept:duration; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{ dept.code }}</td>
+                    <td class="font-medium">{{ dept.name }}</td>
+                    <td class="description-cell">{{ dept.description }}</td>
+                    <td>{{ dept.duration }}</td>
+                    <td class="capitalize">{{ dept.termType }}</td>
+                    <td class="action-buttons">
+                        <button class="btn-edit" (click)="onEdit(dept)">Edit</button>
+                        <button class="btn-delete" (click)="onDelete(dept.id)">Delete</button>
+                    </td>
+                </tr>
+                <!-- Show this if the array is empty -->
+                <tr *ngIf="departmentList.length === 0">
+                    <td colspan="6" class="empty-state">No departments found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showSuccessModal">
+    <div class="modal-content animate-pop">
+        <div class="modal-icon-wrapper success-icon">
+            <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h3>Deleted Successfully!</h3>
+        <p class="modal-text">The campus has been permanently removed from the system.</p>
+        <div class="modal-actions-center">
+            <button class="btn-confirm-success" (click)="closeSuccessModal()">Okay</button>
+        </div>
+    </div>
+</div>

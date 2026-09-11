@@ -1,0 +1,100 @@
+<div class="exam-container">
+    <mat-card class="exam-card">
+        <mat-card-header>
+            <mat-card-title>Schedule Examination</mat-card-title>
+            <mat-card-subtitle>Configure the exam details, department, timeline, and subject list.</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="examForm" (ngSubmit)="submitExam()" class="exam-form">
+
+                <!-- Row 1: Exam Name -->
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Exam Name</mat-label>
+                    <input matInput formControlName="examName" placeholder="e.g., Mathematics ultimate exam">
+                    <mat-error *ngIf="examForm.get('examName')?.hasError('required')">Exam name is required</mat-error>
+                </mat-form-field>
+
+                <!-- Row 2: Department and Batch Dropdowns -->
+                <div class="form-row">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Department</mat-label>
+                        <mat-select formControlName="departmentId">
+                            <mat-option *ngFor="let dept of departments" [value]="dept.id">
+                                {{ dept.name }} - {{ dept.code }} ({{ dept.description }})
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="examForm.get('departmentId')?.hasError('required')">Department is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Batch</mat-label>
+                        <mat-select formControlName="batch">
+                            <mat-option *ngFor="let batch of batches" [value]="batch.academicYear">
+                                {{ batch.academicYear }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="examForm.get('batch')?.hasError('required')">Batch is required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Row 3: Timelines -->
+                <div class="form-row">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Start Date & Time</mat-label>
+                        <input matInput type="datetime-local" formControlName="startDateTime">
+                        <mat-error *ngIf="examForm.get('startDateTime')?.hasError('required')">Start time is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>End Date & Time</mat-label>
+                        <input matInput type="datetime-local" formControlName="endDateTime">
+                        <mat-error *ngIf="examForm.get('endDateTime')?.hasError('required')">End time is required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Row 4: Description -->
+                <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" rows="3" placeholder="Enter exam description..."></textarea>
+                </mat-form-field>
+
+                <!-- Dynamic Subjects Section -->
+                <div class="subjects-section">
+                    <div class="subject-header">
+                        <h3>Subjects</h3>
+                        <button type="button" mat-stroked-button color="primary" (click)="addSubject()">
+                            <mat-icon>add</mat-icon> Add Subject
+                        </button>
+                    </div>
+
+                    <div formArrayName="subjects">
+                        <div *ngFor="let subjectCtrl of subjects.controls; let i = index" class="subject-row">
+                            
+                            <!-- Notice [formControlName]="i" instead of standard string names -->
+                            <mat-form-field class="full-width" appearance="outline">
+                                <mat-label>Subject {{ i + 1 }}</mat-label>
+                                <input matInput [formControlName]="i" placeholder="e.g., Java, Operating Systems">
+                                <mat-error *ngIf="subjectCtrl.hasError('required')">Subject name is required</mat-error>
+                            </mat-form-field>
+
+                            <!-- Delete button (disabled if only 1 subject remains) -->
+                            <button type="button" mat-icon-button color="warn" class="delete-btn" 
+                                    (click)="removeSubject(i)" [disabled]="subjects.length === 1">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <button type="submit" mat-raised-button color="primary" [disabled]="examForm.invalid">
+                        Create Exam
+                    </button>
+                </div>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

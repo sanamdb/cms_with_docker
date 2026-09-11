@@ -1,0 +1,132 @@
+<div class="question-container">
+    <mat-card class="question-card">
+        <mat-card-header>
+            <mat-card-title>Create Question</mat-card-title>
+            <mat-card-subtitle>Add a new question to the department question bank.</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="question-form">
+
+                <!-- Row 1: Dept & Batch & Subject -->
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Department</mat-label>
+                        <mat-select formControlName="departmentId">
+                            <mat-option *ngFor="let dept of departments" [value]="dept.id">
+                                {{ dept.code }}, {{ dept.name }} ({{ dept.description }})
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="questionForm.get('departmentId')?.hasError('required')">Required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Batch</mat-label>
+                        <mat-select formControlName="batch">
+                            <mat-option *ngFor="let batch of batches" [value]="batch.academicYear">
+                                {{ batch.academicYear }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="questionForm.get('batch')?.hasError('required')">Required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Subject</mat-label>
+                    <input matInput formControlName="subject" placeholder="e.g., Fluid Mechanics">
+                    <mat-error *ngIf="questionForm.get('subject')?.hasError('required')">Required</mat-error>
+                </mat-form-field>
+
+                <!-- Row 2: Question Text -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Question text</mat-label>
+                    <textarea matInput formControlName="question" rows="3" placeholder="Enter the question here..."></textarea>
+                    <mat-error *ngIf="questionForm.get('question')?.hasError('required')">Required</mat-error>
+                </mat-form-field>
+
+                <!-- Row 3: Options -->
+                <div class="options-grid">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Option 1</mat-label>
+                        <input matInput formControlName="option1">
+                        <mat-error *ngIf="questionForm.get('option1')?.hasError('required')">Required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Option 2</mat-label>
+                        <input matInput formControlName="option2">
+                        <mat-error *ngIf="questionForm.get('option2')?.hasError('required')">Required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Option 3</mat-label>
+                        <input matInput formControlName="option3">
+                        <mat-error *ngIf="questionForm.get('option3')?.hasError('required')">Required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Option 4</mat-label>
+                        <input matInput formControlName="option4">
+                        <mat-error *ngIf="questionForm.get('option4')?.hasError('required')">Required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Row 4: Correct Answer -->
+                <mat-form-field appearance="outline" class="full-width answer-field">
+                    <mat-label>Correct Answer</mat-label>
+                    <mat-select formControlName="answer">
+                        <mat-option *ngIf="availableOptions.length === 0" disabled>
+                            Please fill out options first...
+                        </mat-option>
+                        <mat-option *ngFor="let opt of availableOptions" [value]="opt">
+                            {{ opt }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="questionForm.get('answer')?.hasError('required')">Required</mat-error>
+                </mat-form-field>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" mat-raised-button color="primary">Save Question</button>
+                </div>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<!-- ========================================== -->
+<!-- Modern Success Dialog Popup Template       -->
+<!-- ========================================== -->
+<ng-template #successDialog>
+    <div class="success-dialog-content">
+        <div class="icon-circle">
+            <mat-icon>check</mat-icon>
+        </div>
+        <h2 mat-dialog-title>Success!</h2>
+        <mat-dialog-content>
+            <p>The question has been successfully added to the database.</p>
+        </mat-dialog-content>
+        <mat-dialog-actions align="center">
+            <button mat-flat-button color="primary" (click)="closeSuccessDialog()">Continue</button>
+        </mat-dialog-actions>
+    </div>
+</ng-template>
+
+<!-- ========================================== -->
+<!-- Modern Error Dialog Popup Template         -->
+<!-- ========================================== -->
+<ng-template #errorDialog>
+    <div class="success-dialog-content"> <!-- Reusing the layout class -->
+        <div class="icon-circle error-circle">
+            <mat-icon>error_outline</mat-icon>
+        </div>
+        <h2 mat-dialog-title>Submission Failed</h2>
+        <mat-dialog-content>
+            <p>We could not save the question to the database. Please check your connection and try again.</p>
+        </mat-dialog-content>
+        <mat-dialog-actions align="center">
+            <button mat-flat-button color="warn" (click)="closeErrorDialog()">Close</button>
+        </mat-dialog-actions>
+    </div>
+</ng-template>

@@ -1,0 +1,24 @@
+<div class="about-us-wrapper">
+    <!-- Hero / Greeting Section -->
+    <div class="hero-section">
+        <h1 class="page-title">About Our Campus</h1>
+        <div class="greeting">
+            Hey, <span class="username-highlight" #message></span>!
+        </div>
+    </div>
+
+    <!-- Dynamic Component Container (Student or Guest loads here) -->
+    <div class="dynamic-info-section">
+        <ng-template #comp></ng-template>
+    </div>
+
+    <!-- Contact Info Section (Using ViewChildren) -->
+    <div class="contact-section">
+        <h3 class="section-title">Get In Touch</h3>
+        <div class="contact-cards-container">
+            <app-contact-info></app-contact-info>
+            <app-contact-info></app-contact-info>
+            <app-contact-info></app-contact-info>
+        </div>
+    </div>
+</div>

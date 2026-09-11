@@ -1,0 +1,55 @@
+<div class="existing-apps-container">
+  
+  <!-- Header Section -->
+  <div class="content-header mb-4">
+    <h2>My Submitted Applications</h2>
+    <p class="text-muted">Track the review status and details of your course applications.</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="appliedApplications.length === 0" class="card-box text-center py-5">
+    <i class="bi bi-journal-x display-4 text-muted mb-3"></i>
+    <p class="text-muted mb-0">No submitted applications found.</p>
+  </div>
+
+  <!-- Applications Grid / List -->
+  <div class="applications-grid" *ngIf="appliedApplications.length > 0">
+    <div class="app-card" *ngFor="let app of appliedApplications">
+      
+      <!-- Card Top: Department Name & Status Badge -->
+      <div class="app-card-header">
+        <div class="dept-info">
+          <span class="dept-code-badge">{{ getDepartment(app.departmentId)?.code || 'DEPT' }}</span>
+          <h4 class="dept-name">{{ getDepartment(app.departmentId)?.name || 'Loading Department...' }}</h4>
+        </div>
+        <span class="status-badge" [ngClass]="app.status.toLowerCase()">
+          {{ app.status }}
+        </span>
+      </div>
+
+      <!-- Card Body: Description & Metadata -->
+      <div class="app-card-body">
+        <p class="dept-desc text-muted" *ngIf="getDepartment(app.departmentId)?.description">
+          {{ getDepartment(app.departmentId)?.description }}
+        </p>
+
+        <div class="app-metadata">
+          <div class="meta-item">
+            <span class="meta-label">Academic Batch</span>
+            <span class="meta-value"><i class="bi bi-calendar3 me-1"></i> {{ app.batch }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Submitted On</span>
+            <span class="meta-value"><i class="bi bi-clock me-1"></i> {{ app.createDateTime| date:'mediumDate' }}</span>
+          </div>
+          <div class="meta-item" *ngIf="app.remarks">
+            <span class="meta-label">Remarks</span>
+            <span class="meta-value text-info font-monospace">{{ app.remarks }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

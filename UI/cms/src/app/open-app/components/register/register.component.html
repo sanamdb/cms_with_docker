@@ -1,0 +1,184 @@
+<!-- Modern Floating Toast Error -->
+<div *ngIf="errorMessage" class="toast-error">
+  <span class="icon">⚠️</span>
+  <span class="message">{{ errorMessage }}</span>
+  <button class="close-btn" (click)="errorMessage = ''">&times;</button>
+</div>
+
+<div class="signUp-wrapper">
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <!-- SIGN UP TAB -->
+      <div *ngIf="activeTab == 'signUp'">
+        <h2 class="mb-4 text-center">Create Account</h2>
+        <form #signUpFrm="ngForm" (ngSubmit)="registerUser(signUpFrm)">
+          
+          <div class="form-group mb-3">
+            <input required id="username" name="username" type="text" 
+                   class="form-control" [ngClass]="{'is-invalid': username.invalid && (username.touched || signUpFrm.submitted)}"
+                   [(ngModel)]="signUp.username" #username="ngModel" placeholder="Username" />
+            <small class="invalid-feedback" *ngIf="username.invalid && (username.touched || signUpFrm.submitted)">Username is required.</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <input required id="password" name="password" type="password" 
+                   class="form-control" [ngClass]="{'is-invalid': password.invalid && (password.touched || signUpFrm.submitted)}"
+                   [(ngModel)]="signUp.password" #password="ngModel" placeholder="Password" />
+            <small class="invalid-feedback" *ngIf="password.invalid && (password.touched || signUpFrm.submitted)">Password is required.</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <input required id="email" name="email" type="email" 
+                   class="form-control" [ngClass]="{'is-invalid': email.invalid && (email.touched || signUpFrm.submitted)}"
+                   [(ngModel)]="signUp.email" #email="ngModel" placeholder="Email" />
+            <small class="invalid-feedback" *ngIf="email.invalid && (email.touched || signUpFrm.submitted)">A valid email is required.</small>
+          </div>
+
+          <div class="form-group mb-4">
+            <input required id="phoneNo" name="phoneNo" type="text" 
+                   class="form-control" [ngClass]="{'is-invalid': phoneNo.invalid && (phoneNo.touched || signUpFrm.submitted)}"
+                   [(ngModel)]="signUp.phoneNo" #phoneNo="ngModel" placeholder="Phone Number" />
+            <small class="invalid-feedback" *ngIf="phoneNo.invalid && (phoneNo.touched || signUpFrm.submitted)">Phone number is required.</small>
+          </div>
+
+          <!-- Added: Button now disables and shows spinner while isLoading is true -->
+          <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner"></span>
+            <span *ngIf="!isLoading">Send OTP</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- OTP TAB -->
+      <div *ngIf="activeTab == 'otp'">
+        <h2 class="mb-4 text-center">Verify OTP</h2>
+        <form #otpFrm="ngForm" (ngSubmit)="verifyOtp(otpFrm)">
+          <div class="form-group mb-4">
+            <input required id="otp" name="otp" type="password" maxlength="6"
+                   class="form-control text-center" style="letter-spacing: 5px; font-size: 1.2rem;"
+                   [ngClass]="{'is-invalid': otpInput.invalid && (otpInput.touched || otpFrm.submitted)}"
+                   [(ngModel)]="otp.otp" #otpInput="ngModel" placeholder="• • • • • •" />
+            <small class="invalid-feedback" *ngIf="otpInput.invalid && (otpInput.touched || otpFrm.submitted)">6-digit OTP is required.</small>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Verify OTP</button>
+        </form>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div *ngIf="activeTab == 'profile'">
+        <h2 class="mb-4 text-center">Complete Profile</h2>
+        <form #profileFrm="ngForm" (ngSubmit)="saveProfile(profileFrm)">
+          
+          <div class="row">
+            <div class="col-md-6 form-group mb-3">
+              <label for="firstName">First Name <span class="text-danger">*</span></label>
+              <input type="text" id="firstName" name="firstName" 
+                     class="form-control" [ngClass]="{'is-invalid': fName.invalid && profileFrm.submitted}"
+                     [(ngModel)]="userProfile.firstName" #fName="ngModel" required />
+            </div>
+            <div class="col-md-6 form-group mb-3">
+              <label for="lastName">Last Name <span class="text-danger">*</span></label>
+              <input type="text" id="lastName" name="lastName" 
+                     class="form-control" [ngClass]="{'is-invalid': lName.invalid && profileFrm.submitted}"
+                     [(ngModel)]="userProfile.lastName" #lName="ngModel" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" 
+                               class="form-control" [ngClass]="{'is-invalid': dob.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.dob" #dob="ngModel" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" 
+                               class="form-control" [ngClass]="{'is-invalid': pEmail.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.email" #pEmail="ngModel" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alternateEmail">Alternate Email</label>
+                        <input type="email" id="alternateEmail" name="alternateEmail" class="form-control"
+                            [(ngModel)]="userProfile.alternateEmail" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNo">Phone Number</label>
+                        <input type="tel" id="phoneNo" name="phoneNo" 
+                               class="form-control" [ngClass]="{'is-invalid': pPhone.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.phoneNo" #pPhone="ngModel" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alternatePhoneNo">Alternate Phone Number</label>
+                        <input type="tel" id="alternatePhoneNo" name="alternatePhoneNo" class="form-control"
+                            [(ngModel)]="userProfile.alternatePhoneNo" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fullAddress">Full Address</label>
+                        <input type="text" id="fullAddress" name="fullAddress" 
+                               class="form-control" [ngClass]="{'is-invalid': address.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.fullAddress" #address="ngModel" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" 
+                               class="form-control" [ngClass]="{'is-invalid': city.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.city" #city="ngModel" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" name="pincode" 
+                               class="form-control" [ngClass]="{'is-invalid': pincode.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.pincode" #pincode="ngModel" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state" 
+                               class="form-control" [ngClass]="{'is-invalid': state.invalid && profileFrm.submitted}" 
+                               [(ngModel)]="userProfile.state" #state="ngModel" required />
+                    </div>
+                    
+          <button type="submit" class="btn btn-primary w-100 mt-3">Save Profile</button>
+        </form>
+      </div>
+
+      <!-- PROFILE PICTURE TAB -->
+      <div *ngIf="activeTab == 'profilePic'" class="text-center">
+        <h2 class="mb-4">Upload Profile Picture</h2>
+        
+        <!-- Image Preview Area -->
+        <div class="preview-container mb-4">
+          <img *ngIf="previewUrl" [src]="previewUrl" alt="Profile Preview" class="img-preview shadow-sm" />
+          <div *ngIf="!previewUrl" class="placeholder-preview shadow-sm">
+            <span>No Image Selected</span>
+          </div>
+        </div>
+
+        <div class="form-group mb-4">
+          <input type="file" id="fileUpload" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+        </div>
+
+        <button class="btn btn-primary w-100" (click)="onUpload()" [disabled]="!selectedFile">
+          Upload & Continue
+        </button>
+      </div>
+
+      <!-- FINISH TAB -->
+      <div *ngIf="activeTab == 'finish'" class="text-center py-4">
+        <div class="success-icon mb-3">✅</div>
+        <h2>Registration Complete!</h2>
+        <p class="text-muted mb-4">Your username is <strong>{{globalUsername}}</strong>.<br>You can now log in to your account.</p>
+        <button type="button" class="btn btn-success w-100" (click)="loginWithCredential()">Go to Login</button>
+      </div>
+
+    </div>
+  </div>
+</div>

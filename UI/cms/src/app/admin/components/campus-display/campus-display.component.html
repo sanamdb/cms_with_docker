@@ -1,0 +1,107 @@
+<div>
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- Page Header Section -->
+        <div class="page-header-section">
+            <h2>Manage Campuses</h2>
+            <p class="text-muted">View, edit, and manage all registered campus facilities.</p>
+        </div>
+
+        <!-- Admin Data Table for Campuses -->
+        <div class="table-card">
+            <div class="table-responsive">
+                <table class="admin-data-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Campus ID</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Established</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let campus of campuses">
+                            <!-- All Fields Displayed -->
+                            <td>
+                                <img [src]="'data:image/jpeg;base64,' + campus.campusPicture" [alt]="campus.name"
+                                    class="table-thumbnail">
+                            </td>
+                            <td class="fw-bold">{{ campus.id }}</td>
+                            <td class="fw-bold text-dark">{{ campus.name }}</td>
+                            <td class="text-muted">{{ campus.address }}</td>
+                            <td><span class="city-pill">{{ campus.city }}</span></td>
+                            <td>{{ campus.establishedDate | date:'mediumDate' }}</td>
+
+                            <!-- Edit & Delete Buttons -->
+                            <td class="text-center">
+                                <button class="action-btn edit" title="Edit Campus" (click)="onEdit(campus)">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button class="action-btn delete" title="Delete Campus" (click)="promptDelete(campus)">
+                                    <i class="bi bi-trash3"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modern Pagination Bar (Preserved from your code) -->
+        <nav class="pagination-container" *ngIf="totalPages > 1">
+            <button class="page-btn" [disabled]="currentPage === 0" (click)="onPageChange(currentPage - 1)">
+                <i class="bi bi-chevron-left"></i> Previous
+            </button>
+
+            <div class="page-numbers">
+                <button *ngFor="let page of getPagesArray()" class="page-number-btn"
+                    [class.active]="page === currentPage" (click)="onPageChange(page)">
+                    {{ page + 1 }}
+                </button>
+            </div>
+
+            <button class="page-btn" [disabled]="currentPage === totalPages - 1"
+                (click)="onPageChange(currentPage + 1)">
+                Next <i class="bi bi-chevron-right"></i>
+            </button>
+        </nav>
+    </main>
+</div>
+
+<!-- ============================================== -->
+<!-- MODALS (Rendered outside normal document flow) -->
+<!-- ============================================== -->
+
+<!-- 1. Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showDeleteModal">
+    <div class="modal-content animate-pop">
+        <div class="modal-icon-wrapper danger-icon">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h3>Delete Campus?</h3>
+        <p class="modal-text">Are you surely want to delete <strong>{{ campusToDelete?.name }}</strong>? This action
+            cannot be undone and it will be permanently deleted.</p>
+        <div class="modal-actions">
+            <button class="btn-cancel" (click)="cancelDelete()">No, Keep it</button>
+            <button class="btn-confirm-danger" (click)="confirmDelete()">Yes, Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Success Modal -->
+<div class="modal-overlay" *ngIf="showSuccessModal">
+    <div class="modal-content animate-pop">
+        <div class="modal-icon-wrapper success-icon">
+            <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h3>Deleted Successfully!</h3>
+        <p class="modal-text">The campus has been permanently removed from the system.</p>
+        <div class="modal-actions-center">
+            <button class="btn-confirm-success" (click)="closeSuccessModal()">Okay</button>
+        </div>
+    </div>
+</div>
