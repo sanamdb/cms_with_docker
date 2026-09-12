@@ -1,0 +1,225 @@
+-- What is docker 
+-- Virtualization 
+-- Containarization 
+-- Docker Setup 
+-- First Container from docker desktop UI
+-- First Container using cli
+        docker run hello-world
+-- Basic Command 
+    -- Search image 
+        docker search hello-world 
+    -- pull image 
+        docker pull hello-world
+    -- run image 
+        docker run hello-world
+    -- image list 
+        docker image ls 
+        docker images 
+    -- container list (running & stopped)
+        docker ps
+        docker ps -a 
+    -- help
+        docker help 
+    -- remove container 
+        docker rm <container_id or container_name>
+        docker rm 2463c57adaad
+    -- remove image 
+        docker rmi <image_id or image_name>
+        docker rmi 5dd0d3e6e255
+    -- create container 
+        docker create <image_id>
+        docker create 5dd0d3e6e255
+    -- start container 
+        docker start <container_id or container_name>
+        docker start 1dab41e7c74f2b16082867dcc9d13e6c760d69bae754d6ab7e6869ff3deb34e5 
+    -- stop container 
+        docker stop <container_id, container_name>
+        docker stop 1dab41e7c74f
+    -- pause container 
+        docker pause <container_id or container_name>
+        docker pause 1dab41e7c74f
+-- Docker Architecture 
+-- Run Jdk container 
+    -- search 
+        docker search openjdk:17.0.2-jdk-oraclelinux8
+    -- pull 
+        docker pull openjdk:17.0.2-jdk-oraclelinux8
+    -- run 
+        docker run openjdk:17.0.2-jdk-oraclelinux8
+    -- run interactive 
+        docker run -it openjdk:17.0.2-jdk-oraclelinux8
+-- Spring boot App
+    -- Springboot App with a rest (get) 
+        "basic spring boot application"
+    -- create jar 
+        mvn clean package 
+    -- docker file 
+        file name: Dockerfile (without extension)
+        content: FROM openjdk:17.0.2-jdk-oraclelinux8
+                 COPY target/demo-4.1.1.jar demo.jar
+                 ENTRYPOINT ["java", "-jar", "demo.jar"]
+    -- build container 
+        docker build -t demo:v1 .
+    -- run app container 
+        docker run demo:v1
+        docker run -p 8080:8080 demo:v1
+        docker run -p 8080:8080 -d demo:v1
+-- Springboot with Postgress
+    -- Springboot app with rest (post & get)
+        "create basic spring boot app with postgress & jpa 
+    -- docker file
+        file name: Dockerfile
+        content: FROM openjdk:17.0.2-jdk-oraclelinux8
+                 COPY target/student-1.jar student.jar
+                 ENTRYPOINT ["java", "-jar", "student.jar"]
+    -- docker compose 
+        fileName: docker-compose.yaml
+        content:
+            version: "3.8"
+            services:
+            app:
+                build: .
+                ports:
+                - 8080:8080
+                networks:
+                - student-ntw
+                depends_on:
+                - postgress
+            postgress:
+                image: postgres
+                environment:
+                POSTGRES_USER: admin
+                POSTGRES_PASSWORD: Admin1234
+                POSTGRES_DB: Student
+                ports:
+                - 5432:5432
+                networks:
+                - student-ntw
+                volumes:
+                - student-data:/var/lib/postgresql/data
+            networks:
+            student-ntw:
+                driver: bridge 
+            volumes:
+                student-data:
+
+    -- build 
+        docker-compose up --build
+    -- down 
+        docker-compose down
+
+-- run docker with name 
+    docker run -d --name my_student_sept student-app:latest
+-- debug docker conatiner 
+    docker logs <container_id or container_name>
+    docker logs 24abda1f7a03e013be89892faff458e631c7554629eef15d025e8d77a5ba1fa5
+    docker logs my_student_sept
+-- networks
+    docker network ls
+    docker network create sept-network
+-- volumes
+    docker volume ls
+    docker volume create sept-volume
+-- Run Mongo DB Container 
+    docker run -d \
+    -p 27017:27017 \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=admin \
+    --network sept-network \
+    --name mongodb \
+    mongo
+-- Run Mongo Express client Container 
+    docker run -d \
+    -p 8081:8081 \
+    -e ME_CONFIG_BASICAUTH_USERNAME=admin \
+    -e ME_CONFIG_BASICAUTH_PASSWORD=admin \
+    -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+    -e ME_CONFIG_MONGODB_ADMINPASSWORD=admin \
+    -e ME_CONFIG_MONGODB_PORT=27017 \
+    -e ME_CONFIG_MONGODB_SERVER=mongodb \
+    --network sept-network \
+    --name mongo-express \
+    mongo-express
+
+-- Docker compose for mongo & mongo express 
+    filename: mongo-compose.yaml
+    content: [
+        version: "3.8"
+        services:
+        mongodb:
+            image: mongo
+            ports:
+            - 27017:27017
+            environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin
+            networks:
+            - mongo-network
+        mongo-express:
+            image: mongo-express
+            ports: 
+            - 8081:8081
+            environment:
+            ME_CONFIG_BASICAUTH_USERNAME: admin
+            ME_CONFIG_BASICAUTH_PASSWORD: admin
+            ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+            ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+            ME_CONFIG_MONGODB_PORT: 27017
+            ME_CONFIG_MONGODB_SERVER: mongodb
+            networks:
+            - mongo-network
+        networks:
+        mongo-network:
+            driver: bridge        
+    ]
+    command: 
+        docker-compose -f mongo-compose.yaml up
+    
+-- Springboot app with oracle db on docker 
+    # Create springboot app with jpa & oracle db 
+    # build & generate jar file 
+    # create Dockerfile 
+        FROM openjdk:17
+        COPY target/employee-1.jar employee.jar
+        ENTRYPOINT ["java", "-jar", "employee.jar"]
+    # Create docker compose file (yaml)
+        services:
+            app:
+                build: .
+                ports:
+                - 8080:8080
+                networks:
+                - employee-network
+                depends_on:
+                - oracleDB
+            oracleDB:
+                image: gvenzl/oracle-free:latest
+                ports:
+                - 1521:1521
+                environment:
+                ORACLE_PASSWORD: admin
+                APP_USER: admin
+                APP_USER_PASSWORD: admin
+                networks:
+                - employee-network
+                volumes:
+                - employee-volume:/opt/oracle/oradata
+            networks:
+            employee-network:
+                driver: bridge
+            volumes:
+            employee-volume:
+    # adjust application.properties file based on docker compose 
+        spring.application.name=employee
+        spring.datasource.url=jdbc:oracle:thin:@oracleDB:1521/FREEPDB1
+        spring.datasource.username=admin
+        spring.datasource.password=admin
+        spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+        spring.jpa.database-platform=org.hibernate.dialect.OracleDialect
+        spring.jpa.hibernate.ddl-auto=update
+        spring.jpa.show-sql=true
+        spring.jpa.properties.hibernate.format_sql=true
+    # Command
+        docker-compose up --build
+        docker-compose down
+
