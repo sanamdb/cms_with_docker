@@ -21,7 +21,7 @@ Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (6,'appli
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (7,'application','default','latest','spring.jpa.hibernate.ddl-auto','update');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (8,'application','default','latest','eureka.client.register-with-eureka','true');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (9,'application','default','latest','eureka.client.fetch-registry','true');
-Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (10,'application','default','latest','eureka.client.service-url.defaultZone','http://DiscoveryService:8761/eureka/');
+Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (10,'application','default','latest','eureka.client.service-url.defaultZone','http://discovery-service:8761/eureka/');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (11,'Exam-Service','default','latest','server.port','8085');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (12,'Question-Service','default','latest','server.port','8084');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (13,'Student-Service','default','latest','server.port','8083');
@@ -45,8 +45,8 @@ Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (30,'Noti
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (31,'Exam-Service','default','latest','resilience4j.circuitbreaker.instances.questionServiceCB.sliding-window-size','10');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (32,'Exam-Service','default','latest','resilience4j.circuitbreaker.instances.questionServiceCB.failure-rate-threshold','50');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (33,'Exam-Service','default','latest','resilience4j.circuitbreaker.instances.questionServiceCB.wait-duration-in-open-state','10000ms');
-Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (34,'UsersManagementSystem','default','latest','resilience4j.retry.instances.notificationServiceRetry.max-attempts','3');
-Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (35,'UsersManagementSystem','default','latest','resilience4j.retry.instances.notificationServiceRetry.wait-duration','2000ms');
+Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (34,'User-Management-System','default','latest','resilience4j.retry.instances.notificationServiceRetry.max-attempts','3');
+Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (35,'User-Management-System','default','latest','resilience4j.retry.instances.notificationServiceRetry.wait-duration','2000ms');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (36,'Exam-Service','default','latest','resilience4j.ratelimiter.instances.examRateLimiter.limit-for-period','10');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (37,'Exam-Service','default','latest','resilience4j.ratelimiter.instances.examRateLimiter.limit-refresh-period','300s');
 Insert into PROPERTIES (ID,APPLICATION,PROFILE,LABEL,KEY,VALUE) values (38,'Exam-Service','default','latest','resilience4j.ratelimiter.instances.examRateLimiter.timeout-duration','0ms');

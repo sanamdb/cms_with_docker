@@ -223,3 +223,42 @@
         docker-compose up --build
         docker-compose down
 
+#### CMS Project 
+##Backed
+# create docker file in each service 
+# correct jar file name of each services 
+# correct applications.properties file of each services to sync with docker
+# correct properties table for docker 
+# create a docker compose file with, oracleDB, kafka, kafka init , zipkin & all services 
+##UI
+# craete docker file in angular 13 project with app, node etc
+# create docker compose for angular project 
+######Note: For more information check actual project 
+cd Downloads/docker_sept2026/cms_with_docker/backend
+docker compose up -d --build    --- run docker in detached mode + build
+docker compose down -  shutdown the docker services
+docker compose up -d   --- run docker in detached mode
+
+docker compose --profile discoveryApp up -d --build ---> run application on docker with detached mode + build
+docker compose --profile discoveryApp down  ---> shutdown the application on docker
+
+docker compose --profile configApp up -d --build  ---> run application on docker with detached mode + build
+docker compose --profile configApp down  ---> shutdown the application on docker
+
+docker compose --profile gatewayApp up -d --build ---> run application on docker with detached mode + build
+docker compose --profile gatewayApp down  ---> shutdown the application on docker
+
+docker compose --profile apps up -d --build ---> run application on docker with detached mode + build
+docker compose --profile apps down  ---> shutdown the application on docker
+
+docker compose --profile "*" down
+
+db details (docker db)
+spring.datasource.url=jdbc:oracle:thin:@oracleDB(also, localhost):1521/FREEPDB1
+spring.datasource.username=admin
+spring.datasource.password=admin
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+
+cd Downloads/docker_sept2026/cms_with_docker/UI
+docker compose up -d --build
+docker compose down

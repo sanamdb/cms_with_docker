@@ -13,6 +13,13 @@ services:
       - ./docker_properties_seed.sql:/container-entrypoint-initdb.d/01_properties_seed.sql:ro
     networks:
       - cms-networks
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 180s
+
   kafka:
     image: apache/kafka:3.9.0
     ports:
@@ -22,11 +29,11 @@ services:
     networks:
       - cms-networks
     healthcheck:
-      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1"]
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/9092'"]
       interval: 10s
       timeout: 5s
       retries: 10
-      start_period: 40s
+      start_period: 120s
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
@@ -41,6 +48,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+
   kafka-init:
     image: apache/kafka:3.9.0
     depends_on:
@@ -59,121 +67,154 @@ services:
         --topic college
         --partitions 1
         --replication-factor 1
+
   zipkin:
     image: openzipkin/zipkin:3.4.0
     ports:
       - 9411:9411
     networks:
       - cms-networks
-  DiscoveryService:
+
+  discovery-service:
     build: ./DiscoveryService
+    profiles: ["discoveryApp"]
     ports:
       - 8761:8761
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-  ConfigServer:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  config-server:
     build: ./ConfigServer
+    profiles: ["configApp"]
     ports:
       - 8888:8888
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      DiscoveryService:
-        condition: service_healthy
-  GatewayService:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   discovery-service:
+    #     condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  gateway-service:
     build: ./GatewayService
+    profiles: ["gatewayApp"]
     ports:
       - 8443:8443
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
-  CollegeManagement:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+
+  college-management:
     build: ./CollegeManagement
+    profiles: ["apps"]
     ports:
       - 8080:8080
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      kafka-init:
-        condition: service_completed_successfully
-  ExamService:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+    #   kafka:
+    #     condition: service_healthy
+    #   kafka-init:
+    #     condition: service_completed_successfully
+
+  exam-service:
     build: ./ExamService
+    profiles: ["apps"]
     ports:
       - 8085:8085
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
-  NotificationService:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+
+  notification-service:
     build: ./NotificationService
+    profiles: ["apps"]
     ports:
       - 8082:8082
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      kafka-init:
-        condition: service_completed_successfully
-  QuestionService:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+    #   kafka:
+    #     condition: service_healthy
+    #   kafka-init:
+    #     condition: service_completed_successfully
+
+  question-service:
     build: ./QuestionService
+    profiles: ["apps"]
     ports:
       - 8084:8084
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
-  StudentService:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+
+  student-service:
     build: ./StudentService
+    profiles: ["apps"]
     ports:
       - 8083:8083
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
-  UsersManagementSystem:
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+
+  users-management-system:
     build: ./UsersManagementSystem
+    profiles: ["apps"]
     ports:
       - 8081:8081
     networks:
       - cms-networks
-    depends_on:
-      oracleDB:
-        condition: service_healthy
-      ConfigServer:
-        condition: service_healthy
+    # depends_on:
+    #   oracleDB:
+    #     condition: service_healthy
+    #   config-server:
+    #     condition: service_healthy
+
 networks:
   cms-networks:
     name: cms-networks
     driver: bridge
+
 volumes:
   cms-volumes:
   cms-kafka:
